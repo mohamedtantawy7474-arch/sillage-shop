@@ -416,6 +416,7 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
   const grid = document.getElementById('grid');
   grid.addEventListener('pointermove', e => {
     const card = e.target.closest('.card'); if (!card) return;
+    if (e.target.closest('button')) return;   // hold the tilt still over buttons, so they never slide away mid-click
     const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
     card.classList.add('tilting');
     card.style.transform = `translateY(-6px) rotateX(${(.5 - y) * 9}deg) rotateY(${(x - .5) * 11}deg)`;
