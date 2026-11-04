@@ -5,8 +5,8 @@ const STR = {
   en: {
     langSwitch: 'عربي', langSwitchLabel: 'التبديل إلى العربية',
     navShop: 'Shop', navHow: 'How it works', navSet: 'Discovery set', navFaq: 'FAQ', bag: 'Bag',
-    heroA: 'Smell', heroB: 'Expensive.', heroC: 'Pay for 5ml.',
-    scribble1: 'decanted from<br>genuine bottles', scribble2: 'try it before<br>the 20,000 EGP bottle ;)',
+    heroA: 'Find', heroB: 'Your', heroC: 'Signature.',
+    scribble1: 'decanted from<br>genuine bottles', scribble2: 'wear it for days<br>before you commit',
     metaLeft: 'Niche & designer', featured: 'Featured', fromPrice: 'from {n}', metaScroll: 'Scroll', metaRight: '2 / 5 / 10 ml',
     marquee: ['Niche', 'Designer', '2 · 5 · 10 ml', 'Genuine bottles only', 'Cash on delivery', 'Free delivery over {free}'],
     shopTitle: 'Pick your <em>scent</em>',
@@ -60,8 +60,8 @@ const STR = {
   ar: {
     langSwitch: 'English', langSwitchLabel: 'Switch to English',
     navShop: 'المتجر', navHow: 'إزاي بنشتغل', navSet: 'تشكيلة التجربة', navFaq: 'أسئلة', bag: 'الشنطة',
-    heroA: 'ريحة', heroB: 'فخمة.', heroC: 'بتمن ٥ مل.',
-    scribble1: 'متقسّمة من<br>إزايز أصلية', scribble2: 'جرّبها قبل<br>الإزازة اللي بـ٢٠ ألف ;)',
+    heroA: 'لاقي', heroB: 'ريحتك', heroC: 'المميّزة.',
+    scribble1: 'متقسّمة من<br>إزايز أصلية', scribble2: 'جرّبها أيام<br>قبل ما تقرّر',
     metaLeft: 'نيش وديزاينر', featured: 'المميّز', fromPrice: 'من {n}', metaScroll: 'انزل', metaRight: '٢ / ٥ / ١٠ مل',
     marquee: ['نيش', 'ديزاينر', '٢ · ٥ · ١٠ مل', 'إزايز أصلية بس', 'الدفع عند الاستلام', 'توصيل مجاني فوق {free}'],
     shopTitle: 'اختار <em>ريحتك</em>',
