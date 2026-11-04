@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sillage — Fragrance Decants</title>
 <meta name="description" content="Genuine designer and niche fragrances, decanted into 2, 5 and 10ml. Delivered across Egypt, cash on delivery.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23070a12%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2711%27 fill=%27%23d8c08a%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#070a12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sillage">
+<meta property="og:title" content="Sillage — Smell expensive. Pay for 5ml.">
+<meta property="og:description" content="Genuine designer and niche fragrances in 2, 5 and 10ml decants. Delivered across Egypt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -276,7 +282,7 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
 </footer>
 
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer" aria-label="Bag" aria-hidden="true">
+<aside class="drawer" id="drawer" aria-label="Bag" aria-hidden="true" inert>
   <header><h3 class="display" data-i18n="bagTitle"></h3><button class="close label" id="closeCart"><span data-i18n="close"></span></button></header>
   <div class="items" id="items"></div>
   <footer>
@@ -391,8 +397,14 @@ document.getElementById('items').addEventListener('click', e => {
 });
 
 const drawer = document.getElementById('drawer');
-const openC = () => { document.body.classList.add('cart-open'); drawer.setAttribute('aria-hidden', 'false'); document.getElementById('closeCart').focus(); };
-const closeC = () => { document.body.classList.remove('cart-open'); drawer.setAttribute('aria-hidden', 'true'); };
+// the closed bag is inert, so keyboard focus can't wander into it; closing returns focus to the Bag button
+const openC = () => { document.body.classList.add('cart-open'); drawer.inert = false; drawer.setAttribute('aria-hidden', 'false'); document.getElementById('closeCart').focus(); };
+const closeC = () => {
+  if (!document.body.classList.contains('cart-open')) return;
+  const hadFocus = drawer.contains(document.activeElement);
+  document.body.classList.remove('cart-open'); drawer.inert = true; drawer.setAttribute('aria-hidden', 'true');
+  if (hadFocus) document.getElementById('openCart').focus();
+};
 document.getElementById('openCart').onclick = openC;
 document.getElementById('closeCart').onclick = closeC;
 document.getElementById('scrim').onclick = closeC;
