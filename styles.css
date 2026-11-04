@@ -1,0 +1,114 @@
+/* Sillage shared styles: tokens, type, nav, bag, forms. English + Arabic (RTL). */
+:root{
+  --ink:#070a12; --ink-2:#0e1424; --ink-3:#18213a;
+  --paper:#f1ede4; --muted:#a3a9b8;
+  --gold:#d8c08a; --gold-dim:#b39a62; --danger:#ff7a6b;
+  --line:rgba(241,237,228,.12);
+  --display:'Anton',sans-serif; --display-w:400; --display-lh:.86;
+  --label:'DM Mono',ui-monospace,monospace; --track:.08em; --case:uppercase;
+  --body:'Manrope',system-ui,sans-serif;
+  --hand:'Instrument Serif',serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+/* Arabic: Cairo for everything, Aref Ruqaa for the hand-written notes. Arabic letters must never be letter-spaced. */
+html[lang=ar]{
+  --display:'Cairo',sans-serif; --display-w:900; --display-lh:1.12;
+  --label:'Cairo',sans-serif; --track:0; --case:none;
+  --body:'Cairo',system-ui,sans-serif; --hand:'Aref Ruqaa',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;overflow-x:clip;scrollbar-color:var(--ink-3) var(--ink)}
+body{background:var(--ink);color:var(--paper);font-family:var(--body);-webkit-font-smoothing:antialiased;caret-color:var(--gold)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--gold);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--ink-3);border-radius:10px;border:2px solid var(--ink)}
+.label{font-family:var(--label);font-size:12px;text-transform:var(--case);letter-spacing:var(--track)}
+.label button{text-transform:inherit;letter-spacing:inherit;font-size:inherit}
+html[lang=ar] .label{font-size:14px;font-weight:600}
+.display{font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;line-height:var(--display-lh)}
+[dir=rtl] .arrow{transform:scaleX(-1)}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;inset:16px 16px auto;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px;padding-inline-start:20px;border-radius:999px;background:rgba(7,10,18,.78);backdrop-filter:blur(14px);border:1px solid var(--line)}
+.logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.logo i{width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block}
+.nav ul{display:flex;gap:28px;list-style:none}
+.nav ul a{color:var(--muted);transition:color .2s}
+.nav ul a:hover{color:var(--gold)}
+.nav-end{display:flex;gap:8px;align-items:center}
+.lang{border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-size:14px;transition:border-color .2s}
+.lang:hover{border-color:var(--paper)}
+.lang:lang(ar){font-family:'Cairo',sans-serif;font-weight:700}
+.lang:lang(en){font-family:'DM Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.pill{background:var(--gold);color:var(--ink);font-weight:500;padding:12px 18px;border-radius:999px;display:inline-flex;gap:10px;align-items:center;transition:transform .2s var(--ease)}
+.pill:hover{transform:scale(1.04)}
+.pill b{background:var(--ink);color:var(--gold);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:11px;padding:0 6px}
+
+/* ---------- BUTTONS ---------- */
+.big-btn{background:var(--gold);color:var(--ink);font-weight:500;font-size:14px;padding:18px 28px;border-radius:999px;display:inline-flex;gap:12px;align-items:center;justify-content:center;transition:gap .3s var(--ease),background .2s}
+.big-btn:hover{gap:20px}
+.big-btn:disabled{opacity:.55;cursor:progress}
+
+/* ---------- BAG DRAWER ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .3s;z-index:60}
+.drawer{position:fixed;top:0;inset-inline-end:0;height:100%;width:min(440px,100%);background:var(--ink-2);z-index:61;transform:translateX(100%);
+  transition:transform .5s var(--ease);display:flex;flex-direction:column;border-inline-start:1px solid var(--line)}
+[dir=rtl] .drawer{transform:translateX(-100%)}
+body.cart-open .scrim{opacity:1;pointer-events:auto}
+body.cart-open .drawer{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid var(--line)}
+.drawer header h3{font-size:36px}
+.close{border:1px solid var(--line);border-radius:999px;padding:8px 14px;display:inline-flex;gap:8px;align-items:center}
+.items{flex:1;overflow:auto;padding:8px 24px}
+.item{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.item .sw{width:52px;height:52px;border-radius:12px;display:grid;place-items:center}
+.item .sw svg{width:16px}
+.item .sw.photo{background:#f4f0e7;overflow:hidden}
+.item .sw.photo img{width:100%;height:100%;object-fit:contain}
+.item h6{font-family:var(--display);font-weight:var(--display-w);font-size:20px;text-transform:uppercase;line-height:1.1}
+.item small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:10px;margin-top:6px}
+.qty button{width:26px;height:26px;border:1px solid var(--line);border-radius:8px;display:grid;place-items:center}
+.qty button:hover{border-color:var(--paper)}
+.item .p{font-family:var(--display);font-weight:var(--display-w);font-size:20px;white-space:nowrap}
+.empty{text-align:center;padding:60px 0;color:var(--muted)}
+.empty b{display:block;font-family:var(--hand);color:var(--gold);font-size:26px;font-weight:400;margin-bottom:8px}
+.drawer footer{padding:24px;border-top:1px solid var(--line)}
+.ship-bar{color:var(--muted);margin-bottom:8px}
+.bar{height:4px;background:var(--ink-3);border-radius:4px;overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;background:var(--gold);width:0;transition:width .5s var(--ease)}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.total span{color:var(--muted)}
+.total b{font-family:var(--display);font-weight:var(--display-w);font-size:36px}
+.drawer .big-btn{width:100%}
+.note{color:var(--muted);text-align:center;margin-top:12px}
+
+/* ---------- TOAST ---------- */
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,140px);background:var(--gold);color:var(--ink);padding:14px 22px;border-radius:999px;
+  font-size:14px;z-index:70;transition:transform .4s var(--ease);max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+
+@media (max-width:860px){ .nav ul{display:none} }
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+
+/* ---------- PREMIUM FINISH ---------- */
+:root{--navy:#1d2a4a}
+/* hand-written notes become an italic serif in English; Arabic keeps its calligraphic Ruqaa */
+.scribble,.scrawl,.empty b,.hand{font-style:italic;font-weight:400}
+html[lang=ar] :is(.scribble,.scrawl,.empty b,.hand){font-style:normal;font-weight:700}
+/* fine film grain over everything, like printed card stock */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* champagne buttons get a slow light sweep on hover, like foil catching light */
+.pill,.big-btn{position:relative;overflow:hidden;background:linear-gradient(180deg,#e6d3a6,var(--gold) 55%,#c4a873);box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 12px 28px -14px rgba(0,0,0,.7)}
+.pill::after,.big-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s var(--ease)}
+.pill:hover::after,.big-btn:hover::after{transform:translateX(120%)}
+.pill > *,.big-btn > *{position:relative;z-index:1}
+

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order received — Sillage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="products.js"></script>
+<script src="i18n.js"></script>
+<style>
+body{min-height:100svh;display:grid;place-items:center;padding:120px 16px 48px;text-align:center}
+body::before{content:"";position:fixed;width:70vmax;height:70vmax;border-radius:50%;background:radial-gradient(circle,rgba(216,192,138,.16),transparent 60%);top:50%;left:50%;transform:translate(-50%,-50%);z-index:-1}
+.hand{font-family:var(--hand);color:var(--gold);font-size:clamp(22px,3vw,32px);transform:rotate(-5deg);display:inline-block;margin-bottom:16px}
+h1{font-size:clamp(64px,13vw,200px)}
+h1 span{color:var(--gold);display:block}
+.order{display:inline-flex;gap:12px;align-items:center;margin-top:32px;padding:10px 12px;padding-inline-start:20px;border:1px solid var(--line);border-radius:999px}
+.order b{font-family:'DM Mono',monospace;font-size:16px;color:var(--paper);letter-spacing:.06em;direction:ltr}
+.order button{background:var(--ink-3);border-radius:999px;padding:8px 14px}
+.order button:hover{background:var(--gold);color:var(--ink)}
+p.msg{color:var(--muted);font-size:18px;line-height:1.65;max-width:46ch;margin:28px auto 36px}
+p.msg strong{color:var(--paper);font-weight:700}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a href="index.html" class="logo"><i></i>SILLAGE</a>
+  <div class="nav-end"><button class="lang" data-lang-toggle></button></div>
+</nav>
+<main>
+  <span class="hand" data-i18n="okHand"></span>
+  <h1 class="display"><span style="color:var(--paper)" data-i18n="okTitleA"></span><span data-i18n="okTitleB"></span></h1>
+  <div class="order label" id="orderBox" hidden><span data-i18n="okOrder"></span><b id="orderId"></b><button id="copy" type="button"></button></div>
+  <p class="msg" id="msg"></p>
+  <a class="big-btn label" href="index.html"><span data-i18n="okBack"></span></a>
+</main>
+<script>
+const q = new URLSearchParams(location.search);
+const id = q.get('order') || '', method = q.get('method') || 'cod';
+const amount = Math.max(0, parseInt(q.get('total'), 10) || 0);
+saveCart([]);   // the order went through, so the bag is done
+
+function draw() {
+  document.getElementById('orderBox').hidden = !id;
+  document.getElementById('orderId').textContent = id;
+  document.getElementById('copy').textContent = t('okCopy');
+  const total = `<strong>${amount ? money(amount) : t('total')}</strong>`;
+  const handle = `<strong dir="ltr">${CATALOG.instapay.replace(/[<>&"]/g, '')}</strong>`;
+  document.getElementById('msg').innerHTML =
+    method === 'card' ? t('okCard') : method === 'instapay' ? t('okInsta', { total, handle }) : t('okCod', { total });
+}
+document.getElementById('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(id); document.getElementById('copy').textContent = t('okCopied'); } catch (e) {}
+};
+document.addEventListener('langchange', draw);
+document.addEventListener('DOMContentLoaded', draw);
+</script>
+</body>
+</html>

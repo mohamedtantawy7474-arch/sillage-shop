@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — Sillage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="products.js"></script>
+<script src="i18n.js"></script>
+<style>
+main{max-width:1180px;margin:0 auto;padding:120px 16px 80px}
+h1{font-size:clamp(56px,9vw,120px);margin-bottom:48px}
+.layout{display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:start}
+fieldset{border:0;margin-bottom:48px}
+legend{font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;font-size:32px;line-height:1.15;margin-bottom:24px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.full{grid-column:1/-1}
+.field label{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;color:var(--paper)}
+.field label i{font-style:normal;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:15px 16px;
+  color:var(--paper);font:inherit;font-size:16px;transition:border-color .2s,background .2s}
+.field textarea{min-height:84px;resize:vertical}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+[dir=rtl] .field select{background-position:16px 50%,22px 50%}
+.field input::placeholder,.field textarea::placeholder{color:#8d94a5}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(241,237,228,.3)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:var(--ink-3)}
+.field .hint{display:block;color:var(--muted);font-size:13px;margin-top:6px}
+.field .err{display:none;color:var(--danger);font-size:14px;margin-top:6px}
+.field.bad input,.field.bad select{border-color:var(--danger)}
+.field.bad .err{display:block}
+.field.bad .hint{display:none}
+input[type=tel]{direction:ltr}
+[dir=rtl] input[type=tel]{text-align:right}
+
+.pay{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;padding:18px 20px;border:1px solid var(--line);border-radius:16px;cursor:pointer;transition:border-color .2s,background .2s}
+.opt:hover{border-color:rgba(241,237,228,.3)}
+.opt input{appearance:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);grid-row:span 2;transition:border .2s}
+.opt input:checked{border:6px solid var(--gold)}
+.opt:has(input:checked){border-color:var(--gold);background:rgba(216,192,138,.05)}
+.opt b{font-weight:700;font-size:17px}
+.opt span{color:var(--muted);font-size:14px}
+
+.summary{position:sticky;top:100px;background:var(--ink-2);border:1px solid var(--line);border-radius:24px;padding:24px}
+.summary h2{font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;font-size:32px;line-height:1.15;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.summary h2 a{font-family:var(--label);font-size:12px;text-transform:var(--case);letter-spacing:var(--track);font-weight:400;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+html[lang=ar] .summary h2 a{font-size:14px}
+.summary h2 a:hover{color:var(--gold)}
+.lines{margin:12px 0 16px}
+.lines .item:last-child{border-bottom:0}
+.rows{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:10px}
+.row{display:flex;justify-content:space-between;color:var(--muted);font-variant-numeric:tabular-nums}
+.row.grand{color:var(--paper);align-items:baseline;margin-top:6px}
+.row.grand b{font-family:var(--display);font-weight:var(--display-w);font-size:36px}
+.summary .big-btn{width:100%;margin-top:20px}
+.form-err{color:var(--danger);margin-top:14px;display:none;line-height:1.5}
+.closed{margin-top:20px;padding:16px 18px;border:1px solid rgba(216,192,138,.35);border-radius:14px;background:rgba(216,192,138,.06)}
+.closed b{display:block;color:var(--gold);font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;font-size:22px;line-height:1.2;margin-bottom:6px}
+.closed p{color:var(--muted);line-height:1.55;font-size:15px}
+.opt.off{opacity:.45;cursor:not-allowed}
+.opt .soon{grid-column:2;color:var(--gold);font-size:13px;font-style:normal}
+.form-err.show{display:block}
+.empty-co{text-align:center;padding:80px 0}
+.empty-co p{color:var(--muted);margin-bottom:24px;font-size:18px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media (max-width:560px){ .fields{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <a href="index.html" class="logo"><i></i>SILLAGE</a>
+  <div class="nav-end">
+    <button class="lang" data-lang-toggle></button>
+    <a class="pill label" href="index.html" id="back"><span data-i18n="coBack"></span></a>
+  </div>
+</nav>
+
+<main>
+  <h1 class="display" data-i18n="coTitle"></h1>
+
+  <div class="empty-co" id="empty" hidden>
+    <p data-i18n="coEmpty"></p>
+    <a class="big-btn label" href="index.html#shop"><span data-i18n="coEmptyLink"></span></a>
+  </div>
+
+  <form class="layout" id="form" novalidate>
+    <div>
+      <fieldset>
+        <legend data-i18n="coDelivery"></legend>
+        <div class="fields">
+          <div class="field full"><label class="label" for="name"><span data-i18n="fName"></span></label>
+            <input id="name" name="name" autocomplete="name" required maxlength="80"><span class="err" data-i18n="eRequired"></span></div>
+          <div class="field"><label class="label" for="phone"><span data-i18n="fPhone"></span></label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01012345678" required maxlength="16">
+            <span class="hint" data-i18n="fPhoneHint"></span><span class="err" data-i18n="ePhone"></span></div>
+          <div class="field"><label class="label" for="email"><span data-i18n="fEmail"></span></label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="120" dir="ltr">
+            <span class="hint" data-i18n="fEmailHint"></span><span class="err" data-i18n="eEmail"></span></div>
+          <div class="field"><label class="label" for="gov"><span data-i18n="fGov"></span></label>
+            <select id="gov" name="governorate" required></select><span class="err" data-i18n="eGov"></span></div>
+          <div class="field"><label class="label" for="city"><span data-i18n="fCity"></span></label>
+            <input id="city" name="city" autocomplete="address-level2" required maxlength="80"><span class="err" data-i18n="eRequired"></span></div>
+          <div class="field full"><label class="label" for="address"><span data-i18n="fAddress"></span></label>
+            <input id="address" name="address" autocomplete="street-address" required maxlength="200"><span class="err" data-i18n="eRequired"></span></div>
+          <div class="field full"><label class="label" for="notes"><span data-i18n="fNotes"></span><i data-i18n="fOptional"></i></label>
+            <textarea id="notes" name="notes" maxlength="300"></textarea></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend data-i18n="coPay"></legend>
+        <div class="pay">
+          <label class="opt"><input type="radio" name="payment" value="cod" checked><b data-i18n="pCod"></b><span data-i18n="pCodD"></span></label>
+          <label class="opt"><input type="radio" name="payment" value="card"><b data-i18n="pCard"></b><span data-i18n="pCardD"></span></label>
+          <label class="opt"><input type="radio" name="payment" value="instapay"><b data-i18n="pInsta"></b><span data-i18n="pInstaD"></span></label>
+        </div>
+      </fieldset>
+    </div>
+
+    <aside class="summary">
+      <h2><span data-i18n="sumTitle"></span><a href="index.html?bag=1" data-i18n="edit"></a></h2>
+      <div class="lines" id="lines"></div>
+      <div class="rows">
+        <div class="row"><span data-i18n="subtotal"></span><span id="sub"></span></div>
+        <div class="row"><span data-i18n="delivery"></span><span id="fee"></span></div>
+        <div class="row grand"><span data-i18n="total"></span><b id="grand"></b></div>
+      </div>
+      <div class="closed" id="closed" hidden><b data-i18n="closedTitle"></b><p data-i18n="closedBody"></p></div>
+      <button class="big-btn label" id="submit" type="submit"><span id="submitText"></span></button>
+      <p class="form-err" id="formErr" role="alert"></p>
+    </aside>
+  </form>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const form = document.getElementById('form');
+const val = id => document.getElementById(id).value.trim();
+let cart = cleanCart(loadCart());
+const PHONE = /^01[0125]\d{8}$/;
+const normPhone = v => v.replace(/[\s-]/g, '').replace(/^\+?20(?=1)/, '0')
+  .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+
+function totals() {
+  const sub = cart.reduce((a, c) => a + lineInfo(c.key).price * c.qty, 0);
+  const fee = sub >= CATALOG.freeDeliveryOver ? 0 : CATALOG.deliveryFee;
+  return { sub, fee, total: sub + fee };
+}
+
+function draw() {
+  const empty = !cart.length;
+  document.getElementById('empty').hidden = !empty;
+  form.hidden = empty;
+  if (empty) return;
+  const gov = document.getElementById('gov'), chosen = gov.value;
+  gov.innerHTML = `<option value="">${t('fGovPick')}</option>` +
+    CATALOG.governorates.map(([en, ar]) => `<option value="${en}">${LANG === 'ar' ? ar : en}</option>`).join('');
+  gov.value = chosen;
+  document.getElementById('lines').innerHTML = cart.map(c => {
+    const i = lineInfo(c.key);
+    return `<div class="item">${thumb(i)}
+      <div><h6>${i.name}</h6><small class="label">${i.size} · ×${num(c.qty)}</small></div>
+      <span class="p">${money(i.price * c.qty)}</span></div>`;
+  }).join('');
+  const { sub, fee, total } = totals();
+  document.getElementById('sub').textContent = money(sub);
+  document.getElementById('fee').textContent = fee ? money(fee) : t('free');
+  document.getElementById('grand').textContent = money(total);
+  drawSubmit();
+}
+
+const method = () => form.payment.value;
+function drawSubmit(busy) {
+  document.getElementById('submitText').textContent =
+    busy ? t('placing') : t(method() === 'card' ? 'payNow' : 'placeOrder');
+  const btn = document.getElementById('submit');
+  btn.disabled = !!busy;
+  btn.querySelector('.arrow') || btn.insertAdjacentHTML('beforeend', ICON.arrow);
+}
+form.addEventListener('change', e => {
+  if (e.target.name !== 'payment') return;
+  drawSubmit();
+  const email = document.getElementById('email');
+  if (email.value || email.closest('.field').classList.contains('bad')) check(email);
+});
+
+// validation: show errors after the first submit attempt or once a field is left
+function check(el) {
+  const v = el.value.trim();
+  let ok = true;
+  if (el.id === 'phone') ok = PHONE.test(normPhone(v));
+  else if (el.id === 'email') ok = v ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) : method() !== 'card';
+  else if (el.required) ok = !!v;
+  el.closest('.field').classList.toggle('bad', !ok);
+  el.setAttribute('aria-invalid', !ok);
+  return ok;
+}
+form.querySelectorAll('input:not([type=radio]),select').forEach(el => {
+  el.addEventListener('blur', () => el.value && check(el));
+  el.addEventListener('input', () => el.closest('.field').classList.contains('bad') && check(el));
+});
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const fields = [...form.querySelectorAll('input:not([type=radio]),select')];
+  const bad = fields.filter(el => !check(el));
+  if (bad.length) { bad[0].focus(); return; }
+  const err = document.getElementById('formErr'); err.classList.remove('show');
+  drawSubmit(true);
+  const body = {
+    lang: LANG, payment: method(),
+    items: cart.map(c => ({ key: c.key, qty: c.qty })),
+    customer: {
+      name: val('name'), phone: normPhone(val('phone')), email: val('email'),
+      governorate: val('gov'), city: val('city'), address: val('address'), notes: val('notes'),
+    },
+  };
+  try {
+    const r = await fetch('api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error && d.error[LANG] || t('eServer'));
+    if (d.redirect) { location.href = d.redirect; return; }   // card: off to Paymob
+    saveCart([]);
+    location.href = `success.html?order=${encodeURIComponent(d.orderId)}&method=${d.payment}&total=${d.total}`;
+  } catch (x) {
+    err.textContent = x.message || t('eServer'); err.classList.add('show');
+    drawSubmit();
+  }
+});
+
+// ask the server whether ordering and card payments are switched on
+// closed until the server says otherwise, so a copy with no server (e.g. static hosting) never takes orders
+let STATUS = { ordersOpen: false, card: false };
+function applyStatus() {
+  const closed = !STATUS.ordersOpen;
+  document.getElementById('closed').hidden = !closed;
+  document.getElementById('submit').hidden = closed;
+  const card = document.querySelector('input[value=card]'), opt = card.closest('.opt');
+  card.disabled = !STATUS.card; opt.classList.toggle('off', !STATUS.card);
+  opt.querySelector('.soon')?.remove();
+  if (!STATUS.card) {
+    opt.insertAdjacentHTML('beforeend', `<em class="soon label">${t('soon')}</em>`);
+    if (card.checked) { document.querySelector('input[value=cod]').checked = true; drawSubmit(); }
+  }
+}
+applyStatus();
+fetch('api/status').then(r => r.ok ? r.json() : Promise.reject()).then(s => { STATUS = s; applyStatus(); }).catch(() => {});
+document.addEventListener('langchange', () => { draw(); applyStatus(); });
+document.addEventListener('DOMContentLoaded', draw);
+</script>
+</body>
+</html>
