@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=a048df64">
 <script src="products.js?v=49825ba3"></script>
-<script src="i18n.js?v=f49a8372"></script>
+<script src="i18n.js?v=b69d11fe"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="orbit.js?v=7983b262"></script>
@@ -66,6 +66,45 @@ html[lang=ar] .scribble{font-size:clamp(21px,2.3vw,33px)}
   .now .house{display:none}
   .hero-meta .side{display:none}
   .hero-meta{justify-content:center}
+}
+
+/* ---------- BRANDS WE HAVE: Lando-style partners row. Title + note, a huge handwritten word that writes itself in
+   as you scroll, and a sliding row of house names (type-set wordmarks) that follows the scroll direction. */
+.brands{position:relative;overflow:hidden;padding-bottom:140px}
+.brands .head-row{position:relative;z-index:2;align-items:start}
+.brands h2{font-size:clamp(46px,6.4vw,104px)}
+.brands h2 .serif{display:block;font-family:'Instrument Serif',serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em;line-height:.9}
+html[lang=ar] .brands h2 .serif{font-family:var(--display);font-weight:400;color:var(--muted)}
+.brands-note{max-width:34ch;color:var(--muted);font-size:16px;line-height:1.55;margin-top:10px}
+.brands-word{position:absolute;z-index:0;left:50%;top:56%;translate:-50% -50%;rotate:-10deg;pointer-events:none;white-space:nowrap;
+  font-family:var(--hand);font-style:italic;font-size:clamp(150px,27vw,440px);line-height:1;color:var(--gold);opacity:.26;
+  clip-path:inset(-20% calc((1 - var(--write,1)) * 100%) -20% -5%)}
+html[lang=ar] .brands-word{font-style:normal;font-size:clamp(130px,22vw,360px);clip-path:inset(-20% -5% -20% calc((1 - var(--write,1)) * 100%))}
+.brand-row{position:relative;z-index:1;margin-top:56px;direction:ltr;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.brand-track{display:flex;width:max-content;will-change:transform}
+.brand-set{display:flex;align-items:center;gap:clamp(48px,6vw,96px);padding-right:clamp(48px,6vw,96px)}
+.brand{color:var(--paper);white-space:nowrap;font-size:30px;line-height:1;opacity:.82;transition:opacity .25s,color .25s,transform .25s}
+.brand:hover,.brand:focus-visible{opacity:1;color:var(--gold);transform:translateY(-3px)}
+.b-serif-i{font-family:'Instrument Serif',serif;font-style:italic;font-size:36px}
+.b-serif-caps{font-family:'Instrument Serif',serif;text-transform:uppercase;letter-spacing:.22em;font-size:26px}
+.b-heavy{font-family:'Manrope',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:-.04em;font-size:32px}
+.b-wide{font-family:'Manrope',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.32em;font-size:20px}
+.b-wide-bold{font-family:'Manrope',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.2em;font-size:24px}
+.b-display{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:34px}
+.b-mono{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:20px}
+.brand.ping{color:var(--gold)}
+.card.ping{outline:2px solid var(--gold);outline-offset:4px;transition:outline-color .6s}
+@media (max-width:640px){
+  .brands{padding-bottom:100px}
+  .brands-word{top:auto;bottom:-10px;translate:-50% 0}
+  .brand-row{margin-top:40px}
+  .brand{font-size:24px} .b-serif-i{font-size:28px} .b-heavy{font-size:26px} .b-display{font-size:27px} .b-wide,.b-mono{font-size:16px} .b-serif-caps,.b-wide-bold{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .brand-track{width:auto;transform:none!important}
+  .brand-set{flex-wrap:wrap;justify-content:center;row-gap:32px;padding:0 16px}
+  .brand-set[aria-hidden]{display:none}
+  .brand-row{mask-image:none}
 }
 
 /* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
@@ -230,6 +269,17 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
     </div>
     <div class="grid" id="grid"></div>
   </div>
+</section>
+
+<section class="brands" id="brands" aria-labelledby="brandsTitle">
+  <div class="brands-word" aria-hidden="true" data-i18n="brandsWord"></div>
+  <div class="wrap">
+    <div class="head-row">
+      <h2 id="brandsTitle"><span data-i18n="brandsA"></span><span class="serif" data-i18n="brandsB"></span></h2>
+      <p class="brands-note" data-i18n="brandsNote"></p>
+    </div>
+  </div>
+  <div class="brand-row"><div class="brand-track" id="brandTrack"></div></div>
 </section>
 
 <section class="how" id="how">
@@ -465,6 +515,56 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
     box.style.setProperty('--px', ((e.clientX / innerWidth - .5) * 30).toFixed(1) + 'px');
     box.style.setProperty('--py', ((e.clientY / innerHeight - .5) * 20).toFixed(1) + 'px');
   });
+})();
+
+// Brands we have: one wordmark per house, linking to its first bottle in the shop. The row drifts sideways and
+// follows the scroll direction (faster while scrolling), pauses on hover/focus and off screen; the big handwritten
+// word writes itself in as the section scrolls up. Reduced motion shows a still, wrapped row.
+(() => {
+  const sec = document.getElementById('brands'), track = document.getElementById('brandTrack');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const looks = { 'French Avenue': 'b-serif-i', 'Yves Saint Laurent': 'b-serif-caps', 'Rabanne': 'b-heavy', 'Antonio Banderas': 'b-mono',
+    'Calvin Klein': 'b-wide', 'Versace': 'b-wide-bold', 'Rasasi': 'b-serif-i', 'Tom Ford': 'b-wide-bold', 'Lattafa': 'b-display', 'Valentino': 'b-serif-caps' };
+  const houses = [];
+  P.forEach(p => { if (!houses.some(h => h.name === p.house)) houses.push({ name: p.house, id: p.id }); });
+  const set = hidden => `<div class="brand-set"${hidden ? ' aria-hidden="true"' : ''}>` + houses.map(h =>
+    `<a class="brand ${looks[h.name] || 'b-heavy'}" href="#p-${h.id}" lang="en" data-id="${h.id}"${hidden ? ' tabindex="-1"' : ''}>${h.name}</a>`).join('') + '</div>';
+  track.innerHTML = set(false) + set(true) + set(true);
+
+  // Clicking a house clears any scent-family filter (so its card exists), then scrolls to and briefly marks the card.
+  track.addEventListener('click', e => {
+    const a = e.target.closest('.brand'); if (!a) return;
+    e.preventDefault();
+    if (filter !== 'all') document.querySelector('.chip[data-f=all]').click();
+    const card = document.getElementById('p-' + a.dataset.id); if (!card) return;
+    card.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'center' });
+    card.classList.add('ping'); setTimeout(() => card.classList.remove('ping'), 1800);
+  });
+
+  let x = 0, dir = 1, boost = 0, lastY = scrollY, held = false, onScreen = false, width = 0;
+  const measure = () => { width = track.firstElementChild.getBoundingClientRect().width; };
+  measure(); addEventListener('resize', measure); document.fonts?.ready.then(measure);
+  ['mouseenter', 'focusin'].forEach(ev => track.addEventListener(ev, () => { held = true; }));
+  ['mouseleave', 'focusout'].forEach(ev => track.addEventListener(ev, () => { held = false; }));
+  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(sec);
+  addEventListener('scroll', () => {
+    const dy = scrollY - lastY; lastY = scrollY;
+    if (dy) { dir = dy > 0 ? 1 : -1; boost = Math.min(boost + Math.abs(dy) * .08, 14); }
+    if (still.matches) return;
+    const r = sec.getBoundingClientRect();
+    const k = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .9)));
+    sec.style.setProperty('--write', k.toFixed(3));
+  }, { passive: true });
+  const tick = () => {
+    if (!still.matches && onScreen && width) {
+      boost *= .92;
+      if (!held) x -= dir * (.6 + boost);
+      if (x <= -width) x += width; if (x > 0) x -= width;
+      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 })();
 </script>
 
