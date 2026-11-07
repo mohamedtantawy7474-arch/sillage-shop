@@ -9,75 +9,62 @@
 <meta name="theme-color" content="#f4efe6">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sillage">
-<meta property="og:title" content="Sillage — Find your signature scent">
+<meta property="og:title" content="Sillage — Genuine fragrance decants, delivered across Egypt">
 <meta property="og:description" content="Genuine designer and niche fragrances in 2, 5 and 10ml decants. Delivered across Egypt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=a048df64">
 <script src="products.js?v=49825ba3"></script>
-<script src="i18n.js?v=9d9eba80"></script>
+<script src="i18n.js?v=266d7e7d"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="orbit.js?v=7983b262"></script>
 <style>
-/* ---------- HERO ----------
-   Headline on one side, the featured bottle standing in a lit champagne arch on the other.
-   The arch is the backdrop that lets a black bottle read clearly on a dark page. */
-.hero{min-height:100svh;position:relative;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:clamp(24px,4vw,72px);
-  padding:120px clamp(16px,5vw,80px) 104px;overflow:hidden;
-  background:var(--ink)}
-.hero-copy{position:relative;z-index:2}
-.hero-title{font-size:clamp(64px,9.2vw,176px);letter-spacing:-.01em}
-html[lang=ar] .hero-title{font-size:clamp(48px,7.4vw,150px);letter-spacing:0}
+/* ---------- HERO: the tester tray ----------
+   A centred headline, then a lacquered tray of every bottle, tipped back like it's lying on a counter.
+   Scrolling lifts the tray upright to face you while the headline drifts up (driven by the script at the end). */
+.hero{position:relative;padding:132px 16px 40px;text-align:center;overflow:hidden;background:var(--ink)}
+.hero-head{max-width:920px;margin:0 auto;position:relative;z-index:2;will-change:transform}
+.hero-title{font-size:clamp(56px,8.4vw,132px);letter-spacing:-.01em}
+html[lang=ar] .hero-title{font-size:clamp(46px,6.8vw,112px);letter-spacing:0}
 .hero-title span{display:block}
-.hero-title .outline{color:transparent;-webkit-text-stroke:2px var(--paper)}
 .hero-title .accent{color:var(--gold)}
-.scribble{font-family:var(--hand);color:var(--gold);font-size:clamp(18px,2vw,28px);line-height:1.25}
-html[lang=ar] .scribble{font-size:clamp(20px,2.2vw,32px)}
-.scribble.s2{display:block;margin-top:28px;transform:rotate(-3deg);transform-origin:left}
-html[lang=ar] .scribble.s2{margin-top:48px;transform-origin:right}
-.scribble svg{display:block;width:90px;margin-top:4px}
-[dir=rtl] .scribble svg{transform:scaleX(-1)}
-.featured{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;margin-top:32px;
-  padding:10px 16px;border-radius:999px;border:1px solid rgba(139,94,52,.35);color:var(--muted);transition:border-color .3s,color .3s}
-.featured:hover{border-color:var(--gold);color:var(--paper)}
-.featured b{color:var(--paper);font-weight:500}
-.featured .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
-#featPrice{color:var(--gold)}
+.hero-sub{max-width:52ch;margin:22px auto 0;color:var(--muted);font-size:clamp(16px,1.4vw,19px);line-height:1.6}
+.hero-acts{display:flex;justify-content:center;align-items:center;gap:22px 28px;flex-wrap:wrap;margin-top:30px}
+.scribble{font-family:var(--hand);color:var(--gold);font-size:clamp(19px,1.9vw,26px);line-height:1.2;transform:rotate(-3deg);text-align:start}
+html[lang=ar] .scribble{font-size:clamp(21px,2.1vw,30px)}
 
-.arch-wrap{position:relative;justify-self:center;width:min(100%,440px)}
-.arch{position:relative;aspect-ratio:5/7;border-radius:999px 999px 28px 28px;overflow:hidden;
-  background:radial-gradient(80% 55% at 50% 34%,#fdf6e6 0%,#ecdcb5 36%,#c4a673 72%,#8a7048 100%);
-  box-shadow:0 50px 90px -40px rgba(70,45,15,.4),inset 0 0 0 1px rgba(255,255,255,.3),inset 0 -80px 90px -50px rgba(60,40,12,.45)}
-.arch::before{content:"";position:absolute;left:50%;bottom:8.5%;width:44%;height:4.5%;transform:translateX(-50%);border-radius:50%;
-  background:radial-gradient(closest-side,rgba(28,18,4,.6),transparent);filter:blur(3px)}
-.arch::after{content:"";position:absolute;inset:12px;border-radius:999px 999px 18px 18px;border:1px solid rgba(255,255,255,.4);pointer-events:none}
-#bottle3d{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.4s var(--ease)}
-.hero.has3d #bottle3d{opacity:1}
-.arch .fallback{position:absolute;left:50%;bottom:6%;height:84%;transform:translateX(-50%)}
-.hero.has3d .arch .fallback{display:none}
-.scribble.s1{position:absolute;z-index:3;top:4%;inset-inline-start:-30%;transform:rotate(-5deg)}
-.scribble.s1 svg{transform:scaleX(-1) rotate(-20deg)}
-[dir=rtl] .scribble.s1 svg{transform:rotate(20deg)}
-
-.hero-meta{position:absolute;bottom:24px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:end;color:var(--muted);z-index:4}
-.hero-meta .scroll{display:flex;gap:8px;align-items:center}
-.hero-meta .scroll i{width:1px;height:40px;background:var(--gold);animation:drip 1.8s infinite}
-@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;text-align:center;padding:100px 16px 56px;gap:28px;min-height:auto}
-  .arch-wrap{order:-1;width:min(66vw,320px)}
-  .hero-title{font-size:clamp(56px,15vw,120px)}
-  html[lang=ar] .hero-title{font-size:clamp(46px,12.5vw,100px)}
-  .scribble.s2{transform-origin:center}
-  .scribble.s1{display:none}
-  .hero-meta{display:none}
+.tray-stage{perspective:1000px;margin:clamp(34px,5vw,64px) auto 0;max-width:1080px}
+.tray{--tilt:20deg;--zoom:1.05;transform:rotateX(var(--tilt)) scale(var(--zoom));transform-origin:50% 30%;will-change:transform;
+  padding:clamp(8px,1.2vw,16px);border-radius:clamp(20px,2.6vw,32px);
+  background:linear-gradient(160deg,#2a221a,#16130f 55%,#241c14);border:1px solid rgba(139,94,52,.55);
+  box-shadow:0 9px 20px rgba(70,45,15,.18),0 37px 37px rgba(70,45,15,.15),0 84px 50px rgba(70,45,15,.1),0 149px 60px rgba(70,45,15,.04)}
+.tray-inner{border-radius:clamp(14px,1.8vw,22px);padding:clamp(14px,2.4vw,34px) clamp(10px,2vw,28px) clamp(8px,1.4vw,18px);
+  background:radial-gradient(120% 90% at 50% 0%,#fffdf8 0%,#f1e9da 60%,#e7dcc8 100%);
+  box-shadow:inset 0 2px 10px rgba(70,45,15,.18)}
+.tray-shelf{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:0 clamp(4px,1.4vw,18px);position:relative;padding-bottom:clamp(8px,1vw,14px)}
+.tray-shelf + .tray-shelf{margin-top:clamp(10px,1.6vw,22px)}
+/* the shelf: a thin bronze ledge the bottles stand on, with a soft shadow under it */
+.tray-shelf::after{content:"";position:absolute;left:-2%;right:-2%;bottom:clamp(24px,2.6vw,34px);height:3px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,#a7774b 8%,#8b5e34 50%,#a7774b 92%,transparent);box-shadow:0 6px 10px rgba(70,45,15,.25)}
+.tray a{display:flex;flex-direction:column;align-items:center;gap:clamp(6px,.8vw,10px);text-decoration:none;border-radius:12px;padding-top:4px}
+.tray img{height:clamp(96px,15vw,200px);width:100%;object-fit:contain;object-position:50% 100%;
+  filter:drop-shadow(0 10px 10px rgba(70,45,15,.22));transition:transform .5s var(--ease)}
+.tray a:hover img,.tray a:focus-visible img{transform:translateY(-8px)}
+.tray small{font-family:'DM Mono',monospace;font-size:clamp(9px,.75vw,11px);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  line-height:1.25;min-height:2.5em;max-width:16ch;text-align:center}
+@media (max-width:640px){
+  .hero{padding-top:112px}
+  .tray small{display:none}
+  .tray-shelf::after{bottom:6px}
+  .tray img{height:clamp(70px,24vw,110px)}
 }
 
 /* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
-.strip{background:var(--gold);color:var(--ink);padding:18px 24px;transform:rotate(-1.5deg);margin:40px -20px;position:relative;z-index:5}
+/* the tilted band is wider than the screen on purpose; this wrapper trims it, so it can never widen the page (in RTL it otherwise did) */
+.strip-wrap{overflow:hidden;padding:12px 0;margin:28px 0}
+.strip{background:var(--gold);color:var(--ink);padding:18px 24px;transform:rotate(-1.5deg);margin:0 -20px;position:relative;z-index:5}
 .strip-list{list-style:none;max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:4px}
 .strip li{font-family:var(--display);font-weight:var(--display-w);font-size:clamp(19px,1.85vw,28px);line-height:1.25;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center}
 .strip li + li::before{content:"";width:.3em;height:.3em;margin:0 .75em;border-radius:50%;background:currentColor;opacity:.55}
@@ -198,33 +185,23 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-copy">
-    <h1 class="hero-title display">
-      <span data-i18n="heroA"></span>
-      <span class="outline" data-i18n="heroB"></span>
-      <span class="accent" data-i18n="heroC"></span>
-    </h1>
-    <span class="scribble s2" data-i18n-html="scribble2"></span>
-    <div><a class="featured label" href="#p-myslf"><span class="dot"></span><span data-i18n="featured"></span><b lang="en">YSL MYSLF EDP</b><span id="featPrice"></span></a></div>
-  </div>
-  <div class="arch-wrap">
-    <div class="scribble s1"><span data-i18n-html="scribble1"></span>
-      <svg viewBox="0 0 90 30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M85 4 C 60 20, 30 26, 6 18"/><path d="M14 10 L5 18 L15 24"/></svg>
-    </div>
-    <div class="arch">
-      <canvas id="bottle3d" aria-hidden="true"></canvas>
-      <img class="fallback" src="images/myslf.png" alt="YSL MYSLF Eau de Parfum">
+<header class="hero" id="hero">
+  <div class="hero-head" id="heroHead">
+    <h1 class="hero-title display" id="heroTitle"></h1>
+    <p class="hero-sub" data-i18n="heroSub"></p>
+    <div class="hero-acts">
+      <a class="big-btn label" href="#shop"><span data-i18n="heroCta"></span></a>
+      <span class="scribble" data-i18n-html="scribble2"></span>
     </div>
   </div>
-  <div class="hero-meta label">
-    <span data-i18n="metaLeft"></span>
-    <span class="scroll"><i></i><span data-i18n="metaScroll"></span></span>
-    <span data-i18n="metaRight"></span>
+  <div class="tray-stage">
+    <div class="tray" id="tray">
+      <div class="tray-inner"><ul class="tray-shelf"></ul><ul class="tray-shelf"></ul></div>
+    </div>
   </div>
 </header>
 
-<div class="strip"><ul class="strip-list" id="marq"></ul></div>
+<div class="strip-wrap"><div class="strip"><ul class="strip-list" id="marq"></ul></div></div>
 
 <!-- Scent carousel: built by orbit.js from products.js; removes itself if GSAP can't load -->
 <section id="tour" class="orb-sec"></section>
@@ -321,7 +298,14 @@ function drawStatic() {
   document.getElementById('marq').innerHTML = words.map(w => `<li>${w}</li>`).join('');
   const s = CATALOG.set, sep = P.reduce((a, p) => a + p.price[0], 0);
   document.getElementById('setPrice').textContent = money(s.price);
-  document.getElementById('featPrice').textContent = t('fromPrice', { n: money(P.find(p => p.id === 'myslf').price[0]) });
+  // hero: the headline counts the catalog; the tray holds every bottle, two shelves, each a link to its card
+  document.getElementById('heroTitle').innerHTML =
+    `<span>${t('heroA', { n: num(P.length) })}</span><span class="accent">${t('heroB')}</span>`;
+  const half = Math.ceil(P.length / 2), shelves = document.querySelectorAll('#tray .tray-shelf');
+  [P.slice(0, half), P.slice(half)].forEach((row, i) => {
+    shelves[i].innerHTML = row.map(p => `<li><a href="#p-${p.id}" aria-label="${p.house} ${p.name}">
+      <img src="${p.img}" alt="" loading="eager" decoding="async"><small lang="en">${p.name}</small></a></li>`).join('');
+  });
   document.getElementById('setWas').textContent = t('setWas', { n: money(sep) });
   document.getElementById('setVials').innerHTML = P.map(p => vial(p.c[1])).join('');
   document.getElementById('faqList').innerHTML = [1, 2, 3, 4].map(i => `
@@ -449,115 +433,30 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
     if (card && !card.contains(e.relatedTarget)) { card.classList.remove('tilting'); card.style.transform = ''; }
   });
 }
+
+// Tester tray: tipped back 20° at the top of the page; scrolling lifts it upright (and settles its scale)
+// while the headline drifts up. Plain scroll + requestAnimationFrame; reduced motion shows it upright and still.
+(() => {
+  const tray = document.getElementById('tray'), head = document.getElementById('heroHead');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let queued = false;
+  function apply() {
+    queued = false;
+    const mobile = innerWidth <= 768;
+    const p = still.matches ? 1 : Math.min(1, Math.max(0, scrollY / (innerHeight * 0.7)));
+    const [z0, z1] = mobile ? [0.9, 1] : [1.05, 1];
+    tray.style.setProperty('--tilt', (20 * (1 - p)).toFixed(2) + 'deg');
+    tray.style.setProperty('--zoom', (z0 + (z1 - z0) * p).toFixed(4));
+    head.style.transform = `translateY(${(-100 * p).toFixed(1)}px)`;
+  }
+  const request = () => { if (!queued && scrollY < innerHeight * 1.5) { queued = true; requestAnimationFrame(apply); } };
+  addEventListener('scroll', request, { passive: true });
+  addEventListener('resize', request);
+  still.addEventListener?.('change', apply);
+  apply();
+})();
 </script>
 
-<!-- 3D hero bottle: YSL MYSLF EDP (black glass, smoky base, square cap). Falls back to the drawing if WebGL is unavailable. -->
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-const hero = document.querySelector('.hero'), canvas = document.getElementById('bottle3d');   // canvas lives inside the arch
-const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let renderer;
-try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
-catch (e) { renderer = null; }
-
-if (renderer) {
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.35;
-
-  const scene = new THREE.Scene();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50);
-  camera.position.set(0, 0, 9);
-
-  const key = new THREE.DirectionalLight('#fff1d2', 3); key.position.set(3, 4, 5); scene.add(key);
-  const rim = new THREE.DirectionalLight('#7f9cff', 4); rim.position.set(-4, 2, -4); scene.add(rim);
-  const rim2 = new THREE.DirectionalLight('#e3cf9f', 3); rim2.position.set(4, 1, -3); scene.add(rim2);   // champagne edge light
-
-  const pivot = new THREE.Group(); scene.add(pivot);
-  const bottle = new THREE.Group(); bottle.position.y = -0.3; pivot.add(bottle);
-
-  // YSL MYSLF EDP: slim glossy black bottle, smoky glass base, square black cap, thin silver neck ring
-  const bodyGeo = new RoundedBoxGeometry(1.0, 2.6, 0.72, 6, 0.045);
-  {
-    // black at the shoulders fading to smoky grey glass at the base, like the real bottle
-    const pos = bodyGeo.attributes.position, col = [];
-    const top = new THREE.Color('#030405'), base = new THREE.Color('#2a2f38');
-    for (let i = 0; i < pos.count; i++) {
-      const k = THREE.MathUtils.smoothstep(pos.getY(i), -1.3, 0.2);
-      const c = base.clone().lerp(top, k); col.push(c.r, c.g, c.b);
-    }
-    bodyGeo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
-  }
-  const body = new THREE.Mesh(bodyGeo, new THREE.MeshPhysicalMaterial({
-    vertexColors: true, roughness: 0.08, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 0.6 }));
-  bottle.add(body);
-  // thick clear glass foot under the black: a slightly larger, see-through slab
-  const foot = new THREE.Mesh(new RoundedBoxGeometry(1.03, 0.2, 0.75, 4, 0.05), new THREE.MeshPhysicalMaterial({
-    color: '#3a404c', transparent: true, opacity: 0.35, roughness: 0.02, clearcoat: 1, envMapIntensity: 0.6, depthWrite: false }));
-  foot.position.y = -1.21; foot.renderOrder = 2; bottle.add(foot);
-  const ring = new THREE.Mesh(new RoundedBoxGeometry(0.72, 0.05, 0.56, 3, 0.015), new THREE.MeshStandardMaterial({
-    color: '#cfd3da', metalness: 1, roughness: 0.18 }));
-  ring.position.y = 1.325; bottle.add(ring);
-  const cap = new THREE.Mesh(new RoundedBoxGeometry(0.76, 0.56, 0.6, 5, 0.035), new THREE.MeshPhysicalMaterial({
-    color: '#050608', roughness: 0.1, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05, envMapIntensity: 0.6 }));
-  cap.position.y = 1.63; bottle.add(cap);
-
-  // small white "EAU DE PARFUM" print near the base, drawn once the fonts are ready
-  const lc = document.createElement('canvas'); lc.width = 512; lc.height = 64;
-  const labelTex = new THREE.CanvasTexture(lc);
-  labelTex.colorSpace = THREE.SRGBColorSpace; labelTex.anisotropy = 8;
-  const label = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.0775), new THREE.MeshBasicMaterial({ map: labelTex, transparent: true }));
-  label.position.set(0, -1.0, 0.362); bottle.add(label);
-  document.fonts.ready.then(() => {
-    const g = lc.getContext('2d');
-    g.clearRect(0, 0, 512, 64);
-    g.fillStyle = '#e9e6df'; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.font = '500 34px Manrope, sans-serif';
-    if ('letterSpacing' in g) g.letterSpacing = '6px';
-    g.fillText('EAU DE PARFUM', 256, 34);
-    labelTex.needsUpdate = true;
-  });
-
-  function resize() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h; camera.updateProjectionMatrix();
-    pivot.userData.base = 1.0;   // the bottle fills about two thirds of the arch
-  }
-  resize(); addEventListener('resize', resize);
-
-  let px = 0, py = 0, rx = 0, ry = 0;
-  addEventListener('pointermove', e => { px = e.clientX / innerWidth - 0.5; py = e.clientY / innerHeight - 0.5; });
-  const start = performance.now();
-  const expoOut = p => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p);
-
-  function frame(now) {
-    const t = (now - start) / 1000;
-    const intro = still ? 1 : expoOut(Math.min(1, t / 2.2));      // one entrance: the bottle rises and turns into place
-    const sp = Math.min(1, scrollY / innerHeight);               // scrolling away turns it further
-    rx += (py * 0.4 - rx) * 0.05; ry += (px * 0.7 - ry) * 0.05;
-    pivot.rotation.y = (still ? 0.5 : t * 0.3) + ry + sp * 1.6 - (1 - intro) * 2.6;
-    pivot.rotation.x = 0.1 + rx * 0.6;
-    pivot.rotation.z = still ? -0.1 : Math.sin(t * 0.6) * 0.05 - 0.08;
-    pivot.position.y = (still ? 0 : Math.sin(t * 0.9) * 0.05) - (1 - intro) * 2.6 + sp * 0.3;
-    pivot.scale.setScalar(pivot.userData.base * (0.88 + 0.12 * intro));
-    renderer.render(scene, camera);
-  }
-
-  // only render while the hero is on screen
-  new IntersectionObserver(([e]) => renderer.setAnimationLoop(e.isIntersecting ? frame : null)).observe(hero);
-  renderer.compile(scene, camera);
-  hero.classList.add('has3d');
-}
-</script>
 </body>
 </html>
