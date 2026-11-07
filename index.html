@@ -444,14 +444,14 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   box.innerHTML = '<div class="bob">' + P.map(p => `<img src="${p.img}" alt="" decoding="async">`).join('') + '</div>';
   const imgs = [...box.querySelectorAll('img')];
-  let i = 0, held = false, onScreen = true;
+  let i = Math.max(0, P.findIndex(p => p.id === 'liquidbrun')), held = false, onScreen = true;
   const label = () => {
     const p = P[i];
     now.href = '#p-' + p.id;
     now.innerHTML = `<span class="dot"></span><b lang="en"><span class="house">${p.house} </span>${p.name}</b><span class="from">${t('fromPrice', { n: money(p.price[0]) })}</span>`;
   };
   const show = n => { imgs[i].classList.remove('on'); i = (n + P.length) % P.length; imgs[i].classList.add('on'); label(); };
-  imgs[0].classList.add('on'); label();
+  imgs[i].classList.add('on'); label();
   setInterval(() => { if (!held && onScreen && !document.hidden && !still.matches) show(i + 1); }, 3200);
   ['mouseenter', 'focus'].forEach(ev => now.addEventListener(ev, () => { held = true; }));
   ['mouseleave', 'blur'].forEach(ev => now.addEventListener(ev, () => { held = false; }));
