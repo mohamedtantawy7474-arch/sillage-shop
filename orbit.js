@@ -128,7 +128,7 @@ html[lang=ar] .orb-price{font-size:26px;top:4px}
   document.head.insertAdjacentHTML('beforeend', `<style>${css}</style>`);
 
   const sel = {};             // chosen size per product (5 ml by default, like the grid)
-  let index = 0, shown = -1, dir = 1, tl = null, seg = 0, st = null;
+  let index = 0, shown = -1, dir = 1, tl = null, seg = 0, st = null, hold = false;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let orbits, heads, bodies, arcEl, dots, thumbs, track, sr, root;
   const arc = { a0: 0, a1: 0 };
@@ -272,6 +272,7 @@ html[lang=ar] .orb-price{font-size:26px;top:4px}
     st = ScrollTrigger.create({
       trigger: sec.querySelector('.orb-trk'), start: 'top top', end: 'bottom bottom',
       onUpdate: self => {
+        if (hold) return;   // a language switch is re-measuring the page; keep the scent that's on screen
         const s = Math.round(self.progress * steps);
         if (s === seg) return;
         const d = s > seg ? 1 : -1;
@@ -335,8 +336,29 @@ html[lang=ar] .orb-price{font-size:26px;top:4px}
   });
   sec.addEventListener('pointercancel', () => { swipe = null; });
 
-  // a language switch rebuilds the markup, so the scroll trigger is rebuilt on the new elements
-  document.addEventListener('langchange', () => { st?.kill(); seg = index; render(); bindScroll(); ScrollTrigger.refresh(); });
+  // where scent i's stretch of scroll starts, and whether the stage is pinned on screen right now
+  const stretchTop = i => st.start + ((st.end - st.start) * i) / (n - 1);
+  const pinned = () => { if (!st) return false; const y = st.scroll(); return y >= st.start - 1 && y <= st.end + 1; };
+
+  // A language switch rebuilds the markup, so the scroll trigger is rebuilt on the new elements. The other language
+  // changes the height of the page above (and its font may still be loading), which would otherwise move the same
+  // scroll position onto a different scent: keep the scent that was showing and put the page back on its stretch.
+  function anchor(keep, wasPinned) {
+    hold = true;
+    ScrollTrigger.refresh();
+    if (wasPinned && st && n > 1) window.scrollTo({ top: stretchTop(keep), behavior: 'instant' });
+    seg = keep;
+    if (index !== keep) { index = keep; show(keep); }
+    requestAnimationFrame(() => requestAnimationFrame(() => { hold = false; }));
+  }
+  document.addEventListener('langchange', () => {
+    const keep = index, wasPinned = pinned();
+    hold = true;
+    st?.kill(); st = null;
+    seg = keep; render(); bindScroll();
+    anchor(keep, wasPinned);
+    document.fonts?.ready.then(() => { if (index === keep) anchor(keep, wasPinned); });
+  });
   render();
   bindScroll();
   // the grid and fonts above the section settle after load; re-measure the pin then
