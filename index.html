@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=a048df64">
 <script src="products.js?v=49825ba3"></script>
-<script src="i18n.js?v=b69d11fe"></script>
+<script src="i18n.js?v=48f2f14d"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="orbit.js?v=7983b262"></script>
@@ -106,6 +106,34 @@ html[lang=ar] .brands-word{font-style:normal;font-size:clamp(130px,22vw,360px);c
   .brand-set[aria-hidden]{display:none}
   .brand-row{mask-image:none}
 }
+
+/* ---------- SCENT NOTES EXPLORER: every key note from the catalog as a wall of big words (sized by how many
+   bottles share it) above a shelf of the bottles. Pointing at a note lights its bottles; at a bottle, its notes. */
+.notes-sec{padding-top:40px}
+.notes-sec .head-row{align-items:end}
+.notes-hint{color:var(--muted);max-width:30ch;font-size:16px;line-height:1.55}
+.note-wall{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:.08em .32em;font-family:var(--display);font-weight:var(--display-w);
+  text-transform:uppercase;line-height:1.02;font-size:clamp(24px,3.4vw,54px);margin:8px auto 48px;max-width:1180px;text-wrap:balance}
+html[lang=ar] .note-wall{line-height:1.3;font-size:clamp(24px,3.2vw,50px)}
+.note{font:inherit;text-transform:inherit;letter-spacing:.005em;color:var(--paper);opacity:.9;transition:opacity .3s,color .3s,transform .3s;font-size:calc(1em * var(--k,1));padding:0 .02em;border-radius:6px}
+.note-wall .sep{width:.16em;height:.16em;border-radius:50%;background:var(--gold);align-self:center;opacity:.6;font-size:.5em}
+.note-wall.active .note{opacity:.14}
+.note-wall.active .note.lit{opacity:1;color:var(--gold)}
+.note[aria-pressed=true]{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.12em}
+.note-cap{min-height:1.5em;text-align:center;font-size:clamp(17px,1.6vw,22px);margin-bottom:28px}
+.note-cap b{color:var(--gold);font-weight:700}
+.shelf{display:grid;grid-template-columns:repeat(10,1fr);gap:12px;align-items:end;border-bottom:2px solid var(--paper);padding-bottom:0}
+.shelf a{display:flex;flex-direction:column;align-items:center;gap:10px;padding-bottom:14px;transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.shelf img{width:100%;max-width:110px;aspect-ratio:4/5;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(22,19,15,.18))}
+.shelf .nm{font-size:11px;color:var(--muted);text-align:center;line-height:1.3;min-height:2.6em}
+.shelf.active a{opacity:.18}
+.shelf.active a.lit{opacity:1;transform:translateY(-10px)}
+.shelf a:focus-visible{opacity:1}
+@media (max-width:820px){
+  .shelf{grid-template-columns:repeat(5,1fr);row-gap:24px;border-bottom:0}
+  .shelf a{border-bottom:2px solid var(--paper)}
+}
+@media (prefers-reduced-motion:reduce){ .shelf.active a.lit{transform:none} }
 
 /* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
 /* the tilted band is wider than the screen on purpose; this wrapper trims it, so it can never widen the page (in RTL it otherwise did) */
@@ -280,6 +308,18 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
     </div>
   </div>
   <div class="brand-row"><div class="brand-track" id="brandTrack"></div></div>
+</section>
+
+<section class="notes-sec" id="notes" aria-labelledby="notesTitle">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 id="notesTitle" data-i18n-html="notesTitle"></h2>
+      <p class="notes-hint" id="notesHint"></p>
+    </div>
+    <div class="note-wall" id="noteWall" role="group"></div>
+    <p class="note-cap" id="noteCap" aria-live="polite"></p>
+    <div class="shelf" id="shelf"></div>
+  </div>
 </section>
 
 <section class="how" id="how">
@@ -517,6 +557,14 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
   });
 })();
 
+// Scroll to a product card (clearing any scent-family filter first so it exists) and briefly outline it.
+function goToCard(id) {
+  if (filter !== 'all') document.querySelector('.chip[data-f=all]').click();
+  const card = document.getElementById('p-' + id); if (!card) return;
+  card.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+  card.classList.add('ping'); setTimeout(() => card.classList.remove('ping'), 1800);
+}
+
 // Brands we have: one wordmark per house, linking to its first bottle in the shop. The row drifts sideways and
 // follows the scroll direction (faster while scrolling), pauses on hover/focus and off screen; the big handwritten
 // word writes itself in as the section scrolls up. Reduced motion shows a still, wrapped row.
@@ -534,11 +582,7 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
   // Clicking a house clears any scent-family filter (so its card exists), then scrolls to and briefly marks the card.
   track.addEventListener('click', e => {
     const a = e.target.closest('.brand'); if (!a) return;
-    e.preventDefault();
-    if (filter !== 'all') document.querySelector('.chip[data-f=all]').click();
-    const card = document.getElementById('p-' + a.dataset.id); if (!card) return;
-    card.scrollIntoView({ behavior: still.matches ? 'auto' : 'smooth', block: 'center' });
-    card.classList.add('ping'); setTimeout(() => card.classList.remove('ping'), 1800);
+    e.preventDefault(); goToCard(a.dataset.id);
   });
 
   let x = 0, dir = 1, boost = 0, lastY = scrollY, held = false, onScreen = false, width = 0;
@@ -565,6 +609,57 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
+})();
+
+// Scent notes explorer: notes come from each product's "notes" (en/ar lists in the same order), merged by their
+// English name. Hover (or focus) previews; a click/tap pins a note until it's clicked again. Bottles do the reverse
+// (hover shows their notes) and link to their card. Rebuilt on language change.
+(() => {
+  const wall = document.getElementById('noteWall'), shelf = document.getElementById('shelf'), cap = document.getElementById('noteCap');
+  const hint = document.getElementById('notesHint'), touch = matchMedia('(hover: none)');
+  let notes = [], pinned = null;
+  const build = () => {
+    const lang = document.documentElement.lang === 'ar' ? 'ar' : 'en', map = new Map();
+    P.forEach(p => {
+      const en = p.notes.en.split(/,\s*/), loc = p.notes[lang].split(/\s*[,،]\s*/);
+      en.forEach((n, i) => {
+        const key = n.toLowerCase();
+        if (!map.has(key)) map.set(key, { key, label: (l => lang === 'en' ? l[0].toUpperCase() + l.slice(1) : l)(loc[i] || n), ids: [] });
+        map.get(key).ids.push(p.id);
+      });
+    });
+    notes = [...map.values()];
+    wall.setAttribute('aria-label', t('notesTitlePlain'));
+    wall.innerHTML = notes.map((n, i) => (i ? '<span class="sep" aria-hidden="true"></span>' : '') +
+      `<button class="note" type="button" data-k="${n.key}" aria-pressed="${pinned === n.key}" style="--k:${(1 + (n.ids.length - 1) * .22).toFixed(2)}">${n.label}</button>`).join('');
+    shelf.innerHTML = P.map(p => `<a href="#p-${p.id}" data-id="${p.id}"><img src="${p.img}" alt="" loading="lazy" decoding="async"><span class="nm label" lang="en">${p.name}</span></a>`).join('');
+    hint.textContent = t(touch.matches ? 'notesHintTouch' : 'notesHint');
+    show(pinned ? { note: pinned } : null);
+  };
+  const show = sel => {
+    const lit = new Set(), litNotes = new Set();
+    if (sel?.note) { const n = notes.find(x => x.key === sel.note); n?.ids.forEach(id => lit.add(id)); litNotes.add(sel.note);
+      cap.innerHTML = n ? t(n.ids.length === 1 ? 'notesIn1' : n.ids.length === 2 ? 'notesIn2' : 'notesInN', { note: `<b>${n.label}</b>`, n: num(n.ids.length) }) : ''; }
+    else if (sel?.id) { const p = P.find(x => x.id === sel.id); lit.add(sel.id); notes.forEach(n => n.ids.includes(sel.id) && litNotes.add(n.key));
+      cap.innerHTML = `<b lang="en">${p.name}</b> · ${p.notes[document.documentElement.lang === 'ar' ? 'ar' : 'en']}`; }
+    else cap.innerHTML = '';
+    wall.classList.toggle('active', !!sel); shelf.classList.toggle('active', !!sel);
+    wall.querySelectorAll('.note').forEach(b => { b.classList.toggle('lit', litNotes.has(b.dataset.k)); b.setAttribute('aria-pressed', pinned === b.dataset.k); });
+    shelf.querySelectorAll('a').forEach(a => a.classList.toggle('lit', lit.has(a.dataset.id)));
+  };
+  const rest = () => show(pinned ? { note: pinned } : null);
+  wall.addEventListener('click', e => { const b = e.target.closest('.note'); if (!b) return; pinned = pinned === b.dataset.k ? null : b.dataset.k; rest(); });
+  wall.addEventListener('pointerover', e => { const b = e.target.closest('.note'); if (b && e.pointerType === 'mouse') show({ note: b.dataset.k }); });
+  wall.addEventListener('pointerleave', rest);
+  wall.addEventListener('focusin', e => { const b = e.target.closest('.note'); if (b) show({ note: b.dataset.k }); });
+  wall.addEventListener('focusout', rest);
+  shelf.addEventListener('pointerover', e => { const a = e.target.closest('a'); if (a && e.pointerType === 'mouse') show({ id: a.dataset.id }); });
+  shelf.addEventListener('pointerleave', rest);
+  shelf.addEventListener('focusin', e => { const a = e.target.closest('a'); if (a) show({ id: a.dataset.id }); });
+  shelf.addEventListener('focusout', rest);
+  shelf.addEventListener('click', e => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); goToCard(a.dataset.id); });
+  document.addEventListener('langchange', build);
+  build();
 })();
 </script>
 
