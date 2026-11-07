@@ -21,7 +21,7 @@ window.CATALOG = {
     {"id": "khamrah", "house": "Lattafa", "name": "Khamrah Qahwa", "fam": "sweet", "c": ["#24130c", "#8a4a22"], "price": [70, 150, 270], "notes": {"en": "Coffee, cardamom, praline", "ar": "قهوة، حبهان، برالين"}, "img": "images/khamrah.png"},
     {"id": "coral", "house": "Valentino", "name": "Born in Roma Coral Fantasy", "fam": "woody", "c": ["#2a1412", "#e07a62"], "price": [200, 450, 850], "notes": {"en": "Red apple, clary sage, tobacco", "ar": "تفاح أحمر، مريمية، تبغ"}, "img": "images/coral.png"}
   ],
-  "set": {"id": "set", "price": 1650, "count": 10, "ml": 2, "c": ["#0b1222", "#d8c08a"]},
+  "set": {"id": "set", "price": 1650, "count": 10, "ml": 2, "c": ["#16130f", "#c89b6d"]},
   "governorates": [
     ["Cairo", "القاهرة"], ["Giza", "الجيزة"], ["Alexandria", "الإسكندرية"], ["Qalyubia", "القليوبية"], ["Dakahlia", "الدقهلية"], ["Sharqia", "الشرقية"], ["Gharbia", "الغربية"], ["Monufia", "المنوفية"], ["Beheira", "البحيرة"], ["Kafr El Sheikh", "كفر الشيخ"], ["Damietta", "دمياط"], ["Port Said", "بورسعيد"], ["Ismailia", "الإسماعيلية"], ["Suez", "السويس"], ["Faiyum", "الفيوم"], ["Beni Suef", "بني سويف"], ["Minya", "المنيا"], ["Asyut", "أسيوط"], ["Sohag", "سوهاج"], ["Qena", "قنا"], ["Luxor", "الأقصر"], ["Aswan", "أسوان"], ["Red Sea", "البحر الأحمر"], ["New Valley", "الوادي الجديد"], ["Matrouh", "مطروح"], ["North Sinai", "شمال سيناء"], ["South Sinai", "جنوب سيناء"]
   ]

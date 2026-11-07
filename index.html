@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sillage — Fragrance Decants</title>
 <meta name="description" content="Genuine designer and niche fragrances, decanted into 2, 5 and 10ml. Delivered across Egypt, cash on delivery.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23070a12%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2711%27 fill=%27%23d8c08a%27/%3E%3C/svg%3E">
-<meta name="theme-color" content="#070a12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2316130f%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2711%27 fill=%27%23d9b48a%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4efe6">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sillage">
 <meta property="og:title" content="Sillage — Find your signature scent">
@@ -14,9 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4157ae8f">
-<script src="products.js?v=654dbf9e"></script>
-<script src="i18n.js?v=82d09f7d"></script>
+<link rel="stylesheet" href="styles.css?v=a048df64">
+<script src="products.js?v=49825ba3"></script>
+<script src="i18n.js?v=a0cc330e"></script>
 <style>
 /* ---------- HERO ----------
    Headline on one side, the featured bottle standing in a lit champagne arch on the other.
@@ -37,7 +37,7 @@ html[lang=ar] .scribble.s2{margin-top:48px;transform-origin:right}
 .scribble svg{display:block;width:90px;margin-top:4px}
 [dir=rtl] .scribble svg{transform:scaleX(-1)}
 .featured{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;margin-top:32px;
-  padding:10px 16px;border-radius:999px;border:1px solid rgba(216,192,138,.35);color:var(--muted);transition:border-color .3s,color .3s}
+  padding:10px 16px;border-radius:999px;border:1px solid rgba(139,94,52,.35);color:var(--muted);transition:border-color .3s,color .3s}
 .featured:hover{border-color:var(--gold);color:var(--paper)}
 .featured b{color:var(--paper);font-weight:500}
 .featured .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
@@ -46,7 +46,7 @@ html[lang=ar] .scribble.s2{margin-top:48px;transform-origin:right}
 .arch-wrap{position:relative;justify-self:center;width:min(100%,440px)}
 .arch{position:relative;aspect-ratio:5/7;border-radius:999px 999px 28px 28px;overflow:hidden;
   background:radial-gradient(80% 55% at 50% 34%,#fdf6e6 0%,#ecdcb5 36%,#c4a673 72%,#8a7048 100%);
-  box-shadow:0 50px 90px -40px rgba(0,0,0,.85),inset 0 0 0 1px rgba(255,255,255,.3),inset 0 -80px 90px -50px rgba(60,40,12,.45)}
+  box-shadow:0 50px 90px -40px rgba(70,45,15,.4),inset 0 0 0 1px rgba(255,255,255,.3),inset 0 -80px 90px -50px rgba(60,40,12,.45)}
 .arch::before{content:"";position:absolute;left:50%;bottom:8.5%;width:44%;height:4.5%;transform:translateX(-50%);border-radius:50%;
   background:radial-gradient(closest-side,rgba(28,18,4,.6),transparent);filter:blur(3px)}
 .arch::after{content:"";position:absolute;inset:12px;border-radius:999px 999px 18px 18px;border:1px solid rgba(255,255,255,.4);pointer-events:none}
@@ -95,32 +95,34 @@ h2 em{font-style:normal;color:var(--gold)}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;perspective:1200px}
 /* cards tilt toward the pointer in 3D; the bottle stage floats above the card surface */
-.card{background:linear-gradient(180deg,#111a30,var(--ink-2) 40%);border:1px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;position:relative;
+.card{background:linear-gradient(180deg,#f9f5ee,var(--ink-2) 40%);border:1px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;position:relative;
   transform-style:preserve-3d;transition:transform .7s var(--ease),border-color .3s,box-shadow .7s var(--ease)}
 .card.tilting{transition:transform .12s linear,border-color .3s,box-shadow .7s var(--ease)}
-.card:hover{transform:translateY(-6px);border-color:rgba(216,192,138,.45);box-shadow:0 40px 60px -34px rgba(0,0,0,.9)}
+.card:hover{transform:translateY(-6px);border-color:rgba(139,94,52,.45);box-shadow:0 40px 60px -34px rgba(70,45,15,.3)}
 .card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .5s;
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(216,192,138,.15),transparent 45%)}
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(139,94,52,.15),transparent 45%)}
 .card:hover::after{opacity:1}
-.stage{aspect-ratio:1/1;border-radius:16px;display:grid;place-items:center;position:relative;overflow:hidden;margin-bottom:18px;transform:translateZ(30px);
+.stage{aspect-ratio:1/1;border-radius:16px;display:grid;place-items:center;position:relative;overflow:hidden;margin-bottom:18px;transition:transform .7s var(--ease);
   box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
 .stage::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.07) 50%,transparent 58%)}
 
 .stage .vial{width:28%;transition:transform .6s var(--ease)}
 .card:hover .vial{transform:rotate(-10deg) scale(1.06)}
 /* studio backdrop: warm ivory, faintly tinted with the scent's own colour; white photo backgrounds melt into it */
-.stage.photo{background:radial-gradient(circle at 50% 38%,#fbf8f1 0%,color-mix(in srgb,var(--tint) 18%,#ece6d9) 100%)}
-.stage.photo img{width:88%;height:92%;object-fit:contain;filter:drop-shadow(0 16px 14px rgba(20,24,40,.28));transition:transform .8s var(--ease)}
+.stage.photo{background:radial-gradient(circle at 50% 38%,#ffffff 0%,color-mix(in srgb,var(--tint) 14%,#f1eadd) 100%)}
+.stage.photo img{width:88%;height:92%;object-fit:contain;filter:drop-shadow(0 16px 14px rgba(70,45,15,.22));transition:transform .8s var(--ease)}
+/* the photo lifts off the card only while a mouse hovers it; at rest (and on touch) it sits flush */
+@media (hover:hover) and (pointer:fine){.card:hover .stage{transform:translateZ(30px)}}
 .card:hover .stage.photo img{transform:scale(1.06) translateY(-2%)}
 .stage.photo::after{background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.35) 50%,transparent 58%);mix-blend-mode:soft-light}
-.tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1;background:rgba(7,10,18,.7);backdrop-filter:blur(6px);color:var(--gold);padding:6px 10px;border-radius:999px;border:1px solid rgba(216,192,138,.35)}
+.tag{position:absolute;top:12px;inset-inline-start:12px;z-index:1;background:rgba(244,239,230,.88);backdrop-filter:blur(6px);color:var(--gold);padding:6px 10px;border-radius:999px;border:1px solid rgba(139,94,52,.35)}
 .house{color:var(--muted);font-size:11px}
 .card h3{font-family:'Anton',sans-serif;font-weight:400;font-size:32px;text-transform:uppercase;line-height:1;margin:6px 0 8px}
 .card .notes{font-size:15px;color:var(--muted);margin-bottom:18px;min-height:44px}
 .sizes{display:flex;gap:6px;margin-bottom:14px}
 .size{flex:1;padding:9px 0;border:1px solid var(--line);border-radius:10px;transition:border-color .15s,color .15s,background .15s}
 .size:hover{border-color:var(--paper)}
-.size[aria-pressed=true]{border-color:var(--gold);color:var(--gold);background:rgba(216,192,138,.06)}
+.size[aria-pressed=true]{border-color:var(--gold);color:var(--gold);background:rgba(139,94,52,.06)}
 .buy{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto}
 .price{font-family:var(--display);font-weight:var(--display-w);font-size:28px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .add{background:var(--paper);color:var(--ink);font-weight:500;padding:12px 18px;border-radius:999px;transition:background .2s;white-space:nowrap}
@@ -130,16 +132,16 @@ h2 em{font-style:normal;color:var(--gold)}
 .how{background:var(--paper);color:var(--ink);border-radius:40px 40px 0 0;margin-top:40px}
 .how h2 em{color:var(--ink);background:var(--gold);padding:0 .1em}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:64px;border-top:2px solid var(--ink)}
-.step{padding:32px 24px;padding-inline-start:0;border-inline-end:1px solid rgba(7,10,18,.15)}
+.step{padding:32px 24px;padding-inline-start:0;border-inline-end:1px solid rgba(244,239,230,.16)}
 .step:last-child{border-inline-end:0}
 .step .n{font-family:'Anton',sans-serif;font-size:96px;line-height:1;color:transparent;-webkit-text-stroke:2px var(--ink)}
 .step h3{font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;font-size:28px;line-height:1.15;margin:12px 0 10px}
-.step p{font-size:16px;line-height:1.6;max-width:34ch;color:#3a4152}
+.step p{font-size:16px;line-height:1.6;max-width:34ch;color:rgba(244,239,230,.74)}
 
 /* set */
 .set{background:var(--paper);color:var(--ink);padding-top:0}
 .set-card{background:var(--ink);color:var(--paper);border-radius:32px;padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
-.set-card::after{content:"";position:absolute;inset-inline-end:-10%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(216,192,138,.25),transparent 65%)}
+.set-card::after{content:"";position:absolute;inset-inline-end:-10%;bottom:-40%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(139,94,52,.25),transparent 65%)}
 .set-card p{color:var(--muted);font-size:17px;line-height:1.65;max-width:44ch;margin:20px 0 28px}
 .set-price{display:flex;align-items:baseline;gap:14px;margin-bottom:28px;flex-wrap:wrap}
 .set-price b{font-family:var(--display);font-weight:var(--display-w);font-size:56px;color:var(--gold);line-height:1.1}
@@ -173,7 +175,7 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
   .set-card{grid-template-columns:1fr}
   .foot-top{grid-template-columns:1fr 1fr}
   .foot-top > div:first-child{grid-column:1/-1}
-  .step{border-inline-end:0;border-bottom:1px solid rgba(7,10,18,.15)}
+  .step{border-inline-end:0;border-bottom:1px solid rgba(244,239,230,.16)}
 }
 </style>
 </head>

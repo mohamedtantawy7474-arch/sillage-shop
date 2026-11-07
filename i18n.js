@@ -188,7 +188,7 @@ function thumb(i) {
 function vial(c, w = 60) {
   return `<svg class="vial" viewBox="0 0 30 90" width="${w}" aria-hidden="true">
   <rect x="9" y="1" width="12" height="9" rx="2" fill="#0b1222"/><rect x="11" y="10" width="8" height="6" fill="#bdbdb6"/>
-  <rect x="4" y="16" width="22" height="72" rx="6" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.4)"/>
+  <rect x="4" y="16" width="22" height="72" rx="6" fill="rgba(255,255,255,.28)" stroke="rgba(120,108,92,.65)"/>
   <rect x="6.5" y="34" width="17" height="51" rx="4" fill="${c}"/><rect x="7.5" y="20" width="3" height="62" rx="1.5" fill="#fff" opacity=".35"/></svg>`;
 }
 

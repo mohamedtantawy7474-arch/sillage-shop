@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Checkout — Sillage</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23070a12%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2711%27 fill=%27%23d8c08a%27/%3E%3C/svg%3E">
-<meta name="theme-color" content="#070a12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%2316130f%27/%3E%3Ccircle cx=%2732%27 cy=%2732%27 r=%2711%27 fill=%27%23d9b48a%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4157ae8f">
-<script src="products.js?v=654dbf9e"></script>
-<script src="i18n.js?v=82d09f7d"></script>
+<link rel="stylesheet" href="styles.css?v=a048df64">
+<script src="products.js?v=49825ba3"></script>
+<script src="i18n.js?v=a0cc330e"></script>
 <style>
 main{max-width:1180px;margin:0 auto;padding:120px 16px 80px}
 h1{font-size:clamp(56px,9vw,120px);margin-bottom:48px}
@@ -29,8 +29,8 @@ legend{font-family:var(--display);font-weight:var(--display-w);text-transform:up
 .field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
   background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
 [dir=rtl] .field select{background-position:16px 50%,22px 50%}
-.field input::placeholder,.field textarea::placeholder{color:#8d94a5}
-.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(241,237,228,.3)}
+.field input::placeholder,.field textarea::placeholder{color:#6b6155}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(22,19,15,.3)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:var(--ink-3)}
 .field .hint{display:block;color:var(--muted);font-size:13px;margin-top:6px}
 .field .err{display:none;color:var(--danger);font-size:14px;margin-top:6px}
@@ -42,10 +42,10 @@ input[type=tel]{direction:ltr}
 
 .pay{display:grid;gap:10px}
 .opt{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;padding:18px 20px;border:1px solid var(--line);border-radius:16px;cursor:pointer;transition:border-color .2s,background .2s}
-.opt:hover{border-color:rgba(241,237,228,.3)}
+.opt:hover{border-color:rgba(22,19,15,.3)}
 .opt input{appearance:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);grid-row:span 2;transition:border .2s}
 .opt input:checked{border:6px solid var(--gold)}
-.opt:has(input:checked){border-color:var(--gold);background:rgba(216,192,138,.05)}
+.opt:has(input:checked){border-color:var(--gold);background:rgba(139,94,52,.05)}
 .opt b{font-weight:700;font-size:17px}
 .opt span{color:var(--muted);font-size:14px}
 
@@ -62,7 +62,7 @@ html[lang=ar] .summary h2 a{font-size:14px}
 .row.grand b{font-family:var(--display);font-weight:var(--display-w);font-size:36px}
 .summary .big-btn{width:100%;margin-top:20px}
 .form-err{color:var(--danger);margin-top:14px;display:none;line-height:1.5}
-.closed{margin-top:20px;padding:16px 18px;border:1px solid rgba(216,192,138,.35);border-radius:14px;background:rgba(216,192,138,.06)}
+.closed{margin-top:20px;padding:16px 18px;border:1px solid rgba(139,94,52,.35);border-radius:14px;background:rgba(139,94,52,.06)}
 .closed b{display:block;color:var(--gold);font-family:var(--display);font-weight:var(--display-w);text-transform:uppercase;font-size:22px;line-height:1.2;margin-bottom:6px}
 .closed p{color:var(--muted);line-height:1.55;font-size:15px}
 .opt.off{opacity:.45;cursor:not-allowed}
