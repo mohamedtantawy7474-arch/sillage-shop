@@ -9,56 +9,63 @@
 <meta name="theme-color" content="#f4efe6">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sillage">
-<meta property="og:title" content="Sillage — Genuine fragrance decants, delivered across Egypt">
+<meta property="og:title" content="Sillage — Spray first. Commit later.">
 <meta property="og:description" content="Genuine designer and niche fragrances in 2, 5 and 10ml decants. Delivered across Egypt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=a048df64">
 <script src="products.js?v=49825ba3"></script>
-<script src="i18n.js?v=266d7e7d"></script>
+<script src="i18n.js?v=f49a8372"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="orbit.js?v=7983b262"></script>
 <style>
-/* ---------- HERO: the tester tray ----------
-   A centred headline, then a lacquered tray of every bottle, tipped back like it's lying on a counter.
-   Scrolling lifts the tray upright to face you while the headline drifts up (driven by the script at the end). */
-.hero{position:relative;padding:132px 16px 40px;text-align:center;overflow:hidden;background:var(--ink)}
-.hero-head{max-width:920px;margin:0 auto;position:relative;z-index:2;will-change:transform}
-.hero-title{font-size:clamp(56px,8.4vw,132px);letter-spacing:-.01em}
-html[lang=ar] .hero-title{font-size:clamp(46px,6.8vw,112px);letter-spacing:0}
+/* ---------- HERO: bold and playful ----------
+   A giant three-line headline (solid / outlined / bronze), a real bottle floating over it that swaps through
+   the whole catalog, hand-written notes, and small labels in the corners. Script at the end of the page. */
+.hero{min-height:100svh;position:relative;display:grid;place-items:center;padding:120px 16px 140px;overflow:hidden;background:var(--ink)}
+.hero-title{text-align:center;font-size:clamp(54px,15.5vw,250px);letter-spacing:-.01em;position:relative;z-index:1}
+html[lang=ar] .hero-title{font-size:clamp(50px,13vw,215px);letter-spacing:0}
 .hero-title span{display:block}
+.hero-title .outline{color:transparent;-webkit-text-stroke:2px var(--paper)}
 .hero-title .accent{color:var(--gold)}
-.hero-sub{max-width:52ch;margin:22px auto 0;color:var(--muted);font-size:clamp(16px,1.4vw,19px);line-height:1.6}
-.hero-acts{display:flex;justify-content:center;align-items:center;gap:22px 28px;flex-wrap:wrap;margin-top:30px}
-.scribble{font-family:var(--hand);color:var(--gold);font-size:clamp(19px,1.9vw,26px);line-height:1.2;transform:rotate(-3deg);text-align:start}
-html[lang=ar] .scribble{font-size:clamp(21px,2.1vw,30px)}
-
-.tray-stage{perspective:1000px;margin:clamp(34px,5vw,64px) auto 0;max-width:1080px}
-.tray{--tilt:20deg;--zoom:1.05;transform:rotateX(var(--tilt)) scale(var(--zoom));transform-origin:50% 30%;will-change:transform;
-  padding:clamp(8px,1.2vw,16px);border-radius:clamp(20px,2.6vw,32px);
-  background:linear-gradient(160deg,#2a221a,#16130f 55%,#241c14);border:1px solid rgba(139,94,52,.55);
-  box-shadow:0 9px 20px rgba(70,45,15,.18),0 37px 37px rgba(70,45,15,.15),0 84px 50px rgba(70,45,15,.1),0 149px 60px rgba(70,45,15,.04)}
-.tray-inner{border-radius:clamp(14px,1.8vw,22px);padding:clamp(14px,2.4vw,34px) clamp(10px,2vw,28px) clamp(8px,1.4vw,18px);
-  background:radial-gradient(120% 90% at 50% 0%,#fffdf8 0%,#f1e9da 60%,#e7dcc8 100%);
-  box-shadow:inset 0 2px 10px rgba(70,45,15,.18)}
-.tray-shelf{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:0 clamp(4px,1.4vw,18px);position:relative;padding-bottom:clamp(8px,1vw,14px)}
-.tray-shelf + .tray-shelf{margin-top:clamp(10px,1.6vw,22px)}
-/* the shelf: a thin bronze ledge the bottles stand on, with a soft shadow under it */
-.tray-shelf::after{content:"";position:absolute;left:-2%;right:-2%;bottom:clamp(24px,2.6vw,34px);height:3px;border-radius:2px;
-  background:linear-gradient(90deg,transparent,#a7774b 8%,#8b5e34 50%,#a7774b 92%,transparent);box-shadow:0 6px 10px rgba(70,45,15,.25)}
-.tray a{display:flex;flex-direction:column;align-items:center;gap:clamp(6px,.8vw,10px);text-decoration:none;border-radius:12px;padding-top:4px}
-.tray img{height:clamp(96px,15vw,200px);width:100%;object-fit:contain;object-position:50% 100%;
-  filter:drop-shadow(0 10px 10px rgba(70,45,15,.22));transition:transform .5s var(--ease)}
-.tray a:hover img,.tray a:focus-visible img{transform:translateY(-8px)}
-.tray small{font-family:'DM Mono',monospace;font-size:clamp(9px,.75vw,11px);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-  line-height:1.25;min-height:2.5em;max-width:16ch;text-align:center}
+.hero-bottle{position:absolute;z-index:2;top:50%;left:50%;width:clamp(150px,17vw,270px);aspect-ratio:4/5;pointer-events:none;
+  translate:calc(-50% + var(--px,0px)) calc(-48% + var(--py,0px));transition:translate .5s var(--ease)}
+.hero-bottle .bob{position:absolute;inset:0;animation:bob 6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-16px) rotate(5deg)}}
+.hero-bottle img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;
+  opacity:0;transform:translateY(22px) scale(.92) rotate(-6deg);transition:opacity .7s var(--ease),transform .9s var(--ease);
+  filter:drop-shadow(0 26px 28px rgba(70,45,15,.32))}
+.hero-bottle img.on{opacity:1;transform:none}
+.scribble{position:absolute;z-index:3;font-family:var(--hand);color:var(--gold);font-size:clamp(19px,2.1vw,30px);line-height:1.2;transform:rotate(-8deg)}
+html[lang=ar] .scribble{font-size:clamp(21px,2.3vw,33px)}
+.scribble.s1{bottom:27%;inset-inline-end:7%;transform:rotate(-6deg)}
+.scribble.s1 svg{transform:scaleY(-1)} [dir=rtl] .scribble.s1 svg{transform:scale(-1,-1)}
+.scribble.s2{bottom:24%;inset-inline-start:7%;transform:rotate(6deg)}
+.scribble svg{display:block;width:90px;margin-top:4px}
+[dir=rtl] .scribble svg{transform:scaleX(-1)}
+.now{position:absolute;z-index:3;bottom:82px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:10px;
+  max-width:calc(100% - 32px);padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(244,239,230,.82);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--muted);white-space:nowrap;transition:border-color .3s}
+.now:hover,.now:focus-visible{border-color:var(--gold)}
+.now .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none}
+.now b{color:var(--paper);font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.now .from{color:var(--gold)}
+.hero-meta{position:absolute;bottom:24px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:end;color:var(--muted);z-index:3}
+.hero-meta .scroll{display:flex;gap:8px;align-items:center}
+.hero-meta .scroll i{width:1px;height:40px;background:var(--gold);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 @media (max-width:640px){
-  .hero{padding-top:112px}
-  .tray small{display:none}
-  .tray-shelf::after{bottom:6px}
-  .tray img{height:clamp(70px,24vw,110px)}
+  .hero{padding-bottom:150px}
+  .scribble.s1{top:96px;bottom:auto;inset-inline-end:5%}
+  .scribble.s1 svg{transform:none} [dir=rtl] .scribble.s1 svg{transform:scaleX(-1)}
+  .scribble.s2{bottom:25%;inset-inline-start:5%}
+  .scribble svg{width:64px}
+  .now{bottom:76px}
+  .now .house{display:none}
+  .hero-meta .side{display:none}
+  .hero-meta{justify-content:center}
 }
 
 /* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
@@ -186,18 +193,21 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
 </nav>
 
 <header class="hero" id="hero">
-  <div class="hero-head" id="heroHead">
-    <h1 class="hero-title display" id="heroTitle"></h1>
-    <p class="hero-sub" data-i18n="heroSub"></p>
-    <div class="hero-acts">
-      <a class="big-btn label" href="#shop"><span data-i18n="heroCta"></span></a>
-      <span class="scribble" data-i18n-html="scribble2"></span>
-    </div>
+  <h1 class="hero-title display">
+    <span data-i18n="heroA"></span>
+    <span class="outline" data-i18n="heroB"></span>
+    <span class="accent" data-i18n="heroC"></span>
+  </h1>
+  <div class="hero-bottle" id="heroBottle" aria-hidden="true"></div>
+  <div class="scribble s1"><span data-i18n-html="scribble1"></span>
+    <svg viewBox="0 0 90 30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M85 4 C 60 20, 30 26, 6 18"/><path d="M14 10 L5 18 L15 24"/></svg>
   </div>
-  <div class="tray-stage">
-    <div class="tray" id="tray">
-      <div class="tray-inner"><ul class="tray-shelf"></ul><ul class="tray-shelf"></ul></div>
-    </div>
+  <div class="scribble s2" data-i18n-html="scribble2"></div>
+  <a class="now label" id="heroNow" href="#shop"></a>
+  <div class="hero-meta label">
+    <span class="side" data-i18n="metaLeft"></span>
+    <span class="scroll"><i></i><span data-i18n="metaScroll"></span></span>
+    <span class="side" data-i18n="metaRight"></span>
   </div>
 </header>
 
@@ -298,14 +308,6 @@ function drawStatic() {
   document.getElementById('marq').innerHTML = words.map(w => `<li>${w}</li>`).join('');
   const s = CATALOG.set, sep = P.reduce((a, p) => a + p.price[0], 0);
   document.getElementById('setPrice').textContent = money(s.price);
-  // hero: the headline counts the catalog; the tray holds every bottle, two shelves, each a link to its card
-  document.getElementById('heroTitle').innerHTML =
-    `<span>${t('heroA', { n: num(P.length) })}</span><span class="accent">${t('heroB')}</span>`;
-  const half = Math.ceil(P.length / 2), shelves = document.querySelectorAll('#tray .tray-shelf');
-  [P.slice(0, half), P.slice(half)].forEach((row, i) => {
-    shelves[i].innerHTML = row.map(p => `<li><a href="#p-${p.id}" aria-label="${p.house} ${p.name}">
-      <img src="${p.img}" alt="" loading="eager" decoding="async"><small lang="en">${p.name}</small></a></li>`).join('');
-  });
   document.getElementById('setWas').textContent = t('setWas', { n: money(sep) });
   document.getElementById('setVials').innerHTML = P.map(p => vial(p.c[1])).join('');
   document.getElementById('faqList').innerHTML = [1, 2, 3, 4].map(i => `
@@ -434,26 +436,35 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(pref
   });
 }
 
-// Tester tray: tipped back 20° at the top of the page; scrolling lifts it upright (and settles its scale)
-// while the headline drifts up. Plain scroll + requestAnimationFrame; reduced motion shows it upright and still.
+// Hero bottle: a real bottle floats over the headline and swaps to the next scent every few seconds; the small
+// link under it names that scent and jumps to its card. It pauses while hovered or focused, when the hero is off
+// screen or the tab hidden, and with reduced motion (which also stops the bob and the pointer drift).
 (() => {
-  const tray = document.getElementById('tray'), head = document.getElementById('heroHead');
+  const box = document.getElementById('heroBottle'), now = document.getElementById('heroNow'), hero = document.getElementById('hero');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
-  let queued = false;
-  function apply() {
-    queued = false;
-    const mobile = innerWidth <= 768;
-    const p = still.matches ? 1 : Math.min(1, Math.max(0, scrollY / (innerHeight * 0.7)));
-    const [z0, z1] = mobile ? [0.9, 1] : [1.05, 1];
-    tray.style.setProperty('--tilt', (20 * (1 - p)).toFixed(2) + 'deg');
-    tray.style.setProperty('--zoom', (z0 + (z1 - z0) * p).toFixed(4));
-    head.style.transform = `translateY(${(-100 * p).toFixed(1)}px)`;
-  }
-  const request = () => { if (!queued && scrollY < innerHeight * 1.5) { queued = true; requestAnimationFrame(apply); } };
-  addEventListener('scroll', request, { passive: true });
-  addEventListener('resize', request);
-  still.addEventListener?.('change', apply);
-  apply();
+  box.innerHTML = '<div class="bob">' + P.map(p => `<img src="${p.img}" alt="" decoding="async">`).join('') + '</div>';
+  const imgs = [...box.querySelectorAll('img')];
+  let i = 0, held = false, onScreen = true;
+  const label = () => {
+    const p = P[i];
+    now.href = '#p-' + p.id;
+    now.innerHTML = `<span class="dot"></span><b lang="en"><span class="house">${p.house} </span>${p.name}</b><span class="from">${t('fromPrice', { n: money(p.price[0]) })}</span>`;
+  };
+  const show = n => { imgs[i].classList.remove('on'); i = (n + P.length) % P.length; imgs[i].classList.add('on'); label(); };
+  imgs[0].classList.add('on'); label();
+  setInterval(() => { if (!held && onScreen && !document.hidden && !still.matches) show(i + 1); }, 3200);
+  ['mouseenter', 'focus'].forEach(ev => now.addEventListener(ev, () => { held = true; }));
+  ['mouseleave', 'blur'].forEach(ev => now.addEventListener(ev, () => { held = false; }));
+  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero);
+  document.addEventListener('langchange', label);
+  const bob = box.querySelector('.bob');
+  const calm = () => { bob.style.animation = still.matches ? 'none' : ''; };
+  still.addEventListener?.('change', calm); calm();
+  addEventListener('pointermove', e => {
+    if (scrollY > innerHeight || still.matches) return;
+    box.style.setProperty('--px', ((e.clientX / innerWidth - .5) * 30).toFixed(1) + 'px');
+    box.style.setProperty('--py', ((e.clientY / innerHeight - .5) * 20).toFixed(1) + 'px');
+  });
 })();
 </script>
 
