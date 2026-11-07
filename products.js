@@ -9,6 +9,7 @@ window.CATALOG = {
   "deliveryFee": 75,
   "freeDeliveryOver": 2000,
   "instapay": "yourname@instapay",
+  "weekly": {"id": "khamrah", "why": {"en": "Coffee, cardamom and praline: warm and sweet, made for cool November evenings.", "ar": "قهوة وحبهان وبرالين: ريحة دافية وحلوة، معمولة لليالي نوفمبر الباردة."}},
   "products": [
     {"id": "liquidbrun", "house": "French Avenue", "name": "Liquid Brun", "fam": "sweet", "c": ["#2a1a10", "#b7773a"], "price": [80, 175, 320], "tag": "limited", "notes": {"en": "Lavender, cardamom, vanilla", "ar": "لافندر، حبهان، فانيليا"}, "img": "images/liquidbrun.png"},
     {"id": "myslf", "house": "Yves Saint Laurent", "name": "MYSLF Eau de Parfum", "fam": "woody", "c": ["#1a1d26", "#d9cfb8"], "price": [220, 500, 950], "notes": {"en": "Bergamot, orange blossom, woods", "ar": "برغموت، زهر البرتقال، أخشاب"}, "img": "images/myslf.png"},

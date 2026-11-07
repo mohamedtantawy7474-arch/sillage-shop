@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=a048df64">
-<script src="products.js?v=49825ba3"></script>
-<script src="i18n.js?v=d9f1cf23"></script>
+<script src="products.js?v=3ceaa1e1"></script>
+<script src="i18n.js?v=fc83e231"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="orbit.js?v=7983b262"></script>
@@ -134,6 +134,45 @@ html[lang=ar] .note-wall{line-height:1.3;font-size:clamp(24px,3.2vw,50px)}
   .shelf a{border-bottom:2px solid var(--paper)}
 }
 @media (prefers-reduced-motion:reduce){ .shelf.active a.lit{transform:none} }
+
+/* ---------- SCENT OF THE WEEK: one bottle picked by hand (CATALOG.weekly in products.js) in a dark band, with a
+   slowly spinning badge, its notes, sizes and an add-to-bag button. */
+.week{padding:48px 16px 24px}
+.week-card{position:relative;overflow:hidden;max-width:1320px;margin:0 auto;background:var(--paper);color:var(--ink);border-radius:40px;
+  display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px;padding:clamp(28px,5vw,80px)}
+.week-card::before{content:"";position:absolute;inset:auto -10% -30% 35%;height:90%;background:radial-gradient(closest-side,var(--tint,#8b5e34),transparent);opacity:.35;pointer-events:none}
+.week-text{position:relative;z-index:1}
+.week .eyebrow{display:flex;align-items:center;gap:10px;color:#e2b98c;margin-bottom:28px}
+.week .eyebrow i{width:8px;height:8px;border-radius:50%;background:#e2b98c}
+.week .w-house{color:rgba(244,239,230,.6);margin-bottom:10px}
+.week h2{font-size:clamp(56px,8.4vw,140px);color:var(--ink);margin-bottom:24px}
+.week .why{font-size:clamp(18px,1.6vw,22px);line-height:1.5;max-width:34ch;color:rgba(244,239,230,.82);margin-bottom:24px}
+.week-notes{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.week-notes li{border:1px solid rgba(244,239,230,.25);border-radius:999px;padding:8px 14px}
+.week .sizes{max-width:420px}
+.week .size{border-color:rgba(244,239,230,.25);color:var(--ink)}
+.week .size:hover{border-color:var(--ink)}
+.week .size[aria-pressed=true]{border-color:var(--gold);color:#e2b98c;background:rgba(139,94,52,.18)}
+.week .buy{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.week .price{font-family:var(--display);font-size:40px;line-height:1}
+.week .add{background:var(--gold);color:var(--ink)}
+.week .add:hover,.week .add.done{background:var(--ink);color:var(--paper)}
+.week .more{color:rgba(244,239,230,.7);text-decoration:underline;text-underline-offset:4px}
+.week .more:hover{color:var(--ink)}
+.week-shot{position:relative;z-index:1;display:grid;place-items:center;aspect-ratio:1}
+.week-shot .badge{position:absolute;inset:0;width:100%;height:100%;animation:spin 28s linear infinite;color:#e2b98c}
+.week-shot .badge text{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.32em;text-transform:uppercase;fill:currentColor}
+html[lang=ar] .week-shot .badge text{font-family:'Cairo',sans-serif;font-weight:700;font-size:15px;letter-spacing:0;direction:ltr;unicode-bidi:embed}
+.week-shot .ring{fill:none;stroke:rgba(244,239,230,.14)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.week-shot .bob{width:58%;animation:bob 6s ease-in-out infinite}
+.week-shot img{width:100%;aspect-ratio:4/5;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+@media (max-width:860px){
+  .week-card{grid-template-columns:1fr;border-radius:28px}
+  .week-shot{order:-1;width:min(100%,360px);margin:0 auto -8px}
+  .week .eyebrow{margin-bottom:18px}
+}
+@media (prefers-reduced-motion:reduce){ .week-shot .badge,.week-shot .bob{animation:none} }
 
 /* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
 /* the tilted band is wider than the screen on purpose; this wrapper trims it, so it can never widen the page (in RTL it otherwise did) */
@@ -279,6 +318,8 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
 </header>
 
 <div class="strip-wrap"><div class="strip"><ul class="strip-list" id="marq"></ul></div></div>
+
+<section class="week" id="week" aria-labelledby="weekTitle"><div class="week-card" id="weekCard"></div></section>
 
 <!-- Scent carousel: built by orbit.js from products.js; removes itself if GSAP can't load -->
 <section id="tour" class="orb-sec"></section>
@@ -660,6 +701,51 @@ function goToCard(id) {
   shelf.addEventListener('click', e => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); goToCard(a.dataset.id); });
   document.addEventListener('langchange', build);
   build();
+})();
+
+// Scent of the week: the product named in CATALOG.weekly, with its own size picker and add-to-bag.
+// Change the pick (and its one-line "why") in products.js; the section hides itself if the id doesn't exist.
+(() => {
+  const card = document.getElementById('weekCard'), w = CATALOG.weekly, p = w && P.find(x => x.id === w.id);
+  if (!p) { document.getElementById('week').remove(); return; }
+  let s = 1;
+  const draw = () => {
+    const lang = LANG === 'ar' ? 'ar' : 'en', badge = t('weekBadge') + ' · ';
+    card.style.setProperty('--tint', p.c[1]);
+    card.innerHTML = `<div class="week-text">
+      <p class="eyebrow label"><i></i>${t('weekEyebrow')}</p>
+      <p class="w-house label" lang="en">${p.house}</p>
+      <h2 id="weekTitle" lang="en">${p.name}</h2>
+      <p class="why">${w.why[lang] || w.why.en}</p>
+      <ul class="week-notes label" aria-label="${t('orbNotes')}">${(p.notes[lang] || p.notes.en).split(/\s*[,،]\s*/).map(n => `<li>${n}</li>`).join('')}</ul>
+      <div class="sizes label" role="group">${CATALOG.sizes.map((z, i) => `<button class="size" data-i="${i}" aria-pressed="${i === s}">${t('ml', { n: num(z) })}</button>`).join('')}</div>
+      <div class="buy"><span class="price">${money(p.price[s])}</span><button class="add label">${t('add')}</button><a class="more label" href="#p-${p.id}">${t('weekMore')}</a></div>
+    </div>
+    <div class="week-shot">
+      <svg class="badge" viewBox="0 0 400 400" aria-hidden="true"><defs><path id="weekRing" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0"/></defs>
+        <circle class="ring" cx="200" cy="200" r="150"/><text><textPath href="#weekRing">${badge}</textPath></text></svg>
+      <div class="bob"><img src="${p.img}" alt="${p.house} ${p.name}" decoding="async"></div>
+    </div>`;
+    fitBadge();
+  };
+  // Repeat the badge words to go once round the ring. Latin text is then stretched to close the gap exactly;
+  // Arabic is left unstretched (extra spacing would break its joined letters).
+  const fitBadge = () => {
+    const tp = card.querySelector('textPath'), unit = tp.textContent, ring = 2 * Math.PI * 176;
+    const one = tp.parentNode.getComputedTextLength(); if (!one) return;
+    let n = Math.max(1, Math.floor(ring / one));
+    do { tp.textContent = unit.repeat(n); } while (n-- > 1 && tp.parentNode.getComputedTextLength() > ring - 12);
+    if (LANG !== 'ar') tp.setAttribute('textLength', (ring - 4).toFixed(0));
+  };
+  document.fonts?.ready.then(() => draw());
+  card.addEventListener('click', e => {
+    const size = e.target.closest('.size'), add = e.target.closest('.add'), more = e.target.closest('.more');
+    if (size) { s = +size.dataset.i; card.querySelectorAll('.size').forEach(b => b.setAttribute('aria-pressed', b === size)); card.querySelector('.price').textContent = money(p.price[s]); }
+    if (add) { addToBag(`${p.id}-${s}`); add.textContent = t('added'); add.classList.add('done'); setTimeout(() => { add.textContent = t('add'); add.classList.remove('done'); }, 1400); }
+    if (more) { e.preventDefault(); goToCard(p.id); }
+  });
+  document.addEventListener('langchange', draw);
+  draw();
 })();
 </script>
 
