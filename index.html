@@ -16,14 +16,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=4157ae8f">
 <script src="products.js?v=654dbf9e"></script>
-<script src="i18n.js?v=cb02755c"></script>
+<script src="i18n.js?v=82d09f7d"></script>
 <style>
 /* ---------- HERO ----------
    Headline on one side, the featured bottle standing in a lit champagne arch on the other.
    The arch is the backdrop that lets a black bottle read clearly on a dark page. */
 .hero{min-height:100svh;position:relative;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:clamp(24px,4vw,72px);
   padding:120px clamp(16px,5vw,80px) 104px;overflow:hidden;
-  background:radial-gradient(90% 70% at 75% 100%,#13224a 0%,transparent 65%),var(--ink)}
+  background:var(--ink)}
 .hero-copy{position:relative;z-index:2}
 .hero-title{font-size:clamp(64px,9.2vw,176px);letter-spacing:-.01em}
 html[lang=ar] .hero-title{font-size:clamp(48px,7.4vw,150px);letter-spacing:0}
@@ -73,11 +73,13 @@ html[lang=ar] .scribble.s2{margin-top:48px;transform-origin:right}
   .hero-meta{display:none}
 }
 
-/* ---------- MARQUEE (always scrolls the same way, in both languages) ---------- */
-.marquee{background:var(--gold);color:var(--ink);overflow:hidden;padding:18px 0;transform:rotate(-1.5deg);margin:40px -20px;position:relative;z-index:5;direction:ltr}
-.marquee-track{display:flex;width:max-content;animation:slide 32s linear infinite}
-.marquee span{font-family:var(--display);font-weight:var(--display-w);font-size:clamp(28px,4vw,52px);line-height:1.2;text-transform:uppercase;padding:0 28px;display:flex;align-items:center;gap:28px;white-space:nowrap}
-@keyframes slide{to{transform:translateX(-50%)}}
+/* ---------- PROMISE STRIP: the tilted gold band, static, every point visible at once ---------- */
+.strip{background:var(--gold);color:var(--ink);padding:18px 24px;transform:rotate(-1.5deg);margin:40px -20px;position:relative;z-index:5}
+.strip-list{list-style:none;max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;row-gap:4px}
+.strip li{font-family:var(--display);font-weight:var(--display-w);font-size:clamp(19px,1.85vw,28px);line-height:1.25;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center}
+.strip li + li::before{content:"";width:.3em;height:.3em;margin:0 .75em;border-radius:50%;background:currentColor;opacity:.55}
+/* where the strip wraps, dots would dangle at line starts: separate with space instead */
+@media (max-width:1180px){.strip-list{column-gap:1.1em}.strip li + li::before{display:none}}
 
 /* ---------- SECTIONS ---------- */
 section{padding:120px 16px}
@@ -217,7 +219,7 @@ footer.site{padding:80px 16px 24px;border-top:1px solid var(--line)}
   </div>
 </header>
 
-<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marq"></div></div>
+<div class="strip"><ul class="strip-list" id="marq"></ul></div>
 
 <section id="shop">
   <div class="wrap">
@@ -308,8 +310,7 @@ document.getElementById('closeCart').insertAdjacentHTML('beforeend', ICON.close)
 
 function drawStatic() {
   const words = t('marquee', {}).map(w => w.replace('{free}', money(FREE)));
-  document.getElementById('marq').innerHTML =
-    Array(4).fill(words).flat().map(w => `<span>${w}${ICON.star}</span>`).join('');
+  document.getElementById('marq').innerHTML = words.map(w => `<li>${w}</li>`).join('');
   const s = CATALOG.set, sep = P.reduce((a, p) => a + p.price[0], 0);
   document.getElementById('setPrice').textContent = money(s.price);
   document.getElementById('featPrice').textContent = t('fromPrice', { n: money(P.find(p => p.id === 'myslf').price[0]) });

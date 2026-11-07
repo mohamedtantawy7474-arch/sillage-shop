@@ -194,7 +194,6 @@ function vial(c, w = 60) {
 
 // Small inline icons (one stroke weight) instead of text glyphs.
 const ICON = {
-  star: '<svg viewBox="0 0 24 24" width="0.6em" height="0.6em" aria-hidden="true"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
   close: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
   arrow: '<svg class="arrow" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   minus: '<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
