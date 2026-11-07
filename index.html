@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=a048df64">
+<link rel="stylesheet" href="styles.css?v=8e4d5c79">
 <script src="products.js?v=3ceaa1e1"></script>
 <script src="i18n.js?v=fc83e231"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -25,8 +25,8 @@
    A giant three-line headline (solid / outlined / bronze), a real bottle floating over it that swaps through
    the whole catalog, hand-written notes, and small labels in the corners. Script at the end of the page. */
 .hero{min-height:100svh;position:relative;display:grid;place-items:center;padding:120px 16px 140px;overflow:hidden;background:var(--ink)}
-.hero-title{text-align:center;font-size:clamp(54px,15.5vw,250px);letter-spacing:-.01em;position:relative;z-index:1}
-html[lang=ar] .hero-title{font-size:clamp(50px,13vw,215px);letter-spacing:0}
+.hero-title{text-align:center;font-size:clamp(54px,min(15.5vw,23svh),250px);letter-spacing:-.01em;position:relative;z-index:1}
+html[lang=ar] .hero-title{font-size:clamp(50px,min(13vw,18svh),215px);letter-spacing:0}
 .hero-title span{display:block}
 .hero-title .outline{color:transparent;-webkit-text-stroke:2px var(--paper)}
 .hero-title .accent{color:var(--gold)}
@@ -73,7 +73,7 @@ html[lang=ar] .scribble{font-size:clamp(21px,2.3vw,33px)}
 .brands{position:relative;overflow:hidden;padding-bottom:140px}
 .brands .head-row{position:relative;z-index:2;align-items:start}
 .brands h2{font-size:clamp(46px,6.4vw,104px)}
-.brands h2 .serif{display:block;font-family:'Instrument Serif',serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em;line-height:.9}
+.brands h2 .serif{display:block;font-family:'Instrument Serif',serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em;line-height:1.02}
 html[lang=ar] .brands h2 .serif{font-family:var(--display);font-weight:400;color:var(--muted)}
 .brands-note{max-width:34ch;color:var(--muted);font-size:16px;line-height:1.55;margin-top:10px}
 .brands-word{position:absolute;z-index:0;left:50%;top:56%;translate:-50% -50%;rotate:-10deg;pointer-events:none;white-space:nowrap;

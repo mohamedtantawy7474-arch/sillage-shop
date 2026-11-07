@@ -4,7 +4,7 @@
   --paper:#16130f; --muted:#5e564b;
   --gold:#8b5e34; --gold-dim:#6e4825; --danger:#b3261e;
   --line:rgba(22,19,15,.12);
-  --display:'Anton',sans-serif; --display-w:400; --display-lh:.86;
+  --display:'Anton',sans-serif; --display-w:400; --display-lh:1;
   --label:'DM Mono',ui-monospace,monospace; --track:.08em; --case:uppercase;
   --body:'Manrope',system-ui,sans-serif;
   --hand:'Instrument Serif',serif;
@@ -13,7 +13,7 @@
 }
 /* Arabic: Cairo for everything, Aref Ruqaa for the hand-written notes. Arabic letters must never be letter-spaced. */
 html[lang=ar]{
-  --display:'Cairo',sans-serif; --display-w:900; --display-lh:1.12;
+  --display:'Cairo',sans-serif; --display-w:900; --display-lh:1.3;
   --label:'Cairo',sans-serif; --track:0; --case:none;
   --body:'Cairo',system-ui,sans-serif; --hand:'Aref Ruqaa',serif;
 }
